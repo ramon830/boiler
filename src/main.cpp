@@ -9,6 +9,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <ArduinoOTA.h>
+#include <DNSServer.h> 
 #include "RemoteDebug.h"
 #include "configuration/global.h"
 #include "clock/NTP.h"
@@ -54,6 +55,6 @@ void loop() {
     tickerScheduler.update();
     server.handleClient();
     ArduinoOTA.handle();
+    Debug.handle();
     customWatchdog = millis();
-  
 }

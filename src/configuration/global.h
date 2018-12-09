@@ -114,6 +114,7 @@ float temperature;
 const char* hostThingSpeak = "api.thingspeak.com"; //Адрес для передачі данних
 const char* apikeyThingSpeak="X7AJ51P6BMPP2MMJ"; // ключ від thingsspeak.com
 
+#define HOST_NAME "spirit"
 RemoteDebug Debug;
  
 //==========================================================
@@ -216,7 +217,7 @@ void EEPROMWriteInt(int p_address, int p_value)
 //****Записуємо конфігурацію
 void WriteConfig(){
 
-  Serial.println("Writing Config");
+  Debug.println("Writing Config");
   EEPROM.write(0, 'C');
   EEPROM.write(1, 'F');
   EEPROM.write(2, 'G');

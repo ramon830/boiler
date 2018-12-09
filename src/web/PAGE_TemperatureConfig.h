@@ -200,7 +200,7 @@ void send_Temperature_configuration_html()
   values += "time_fan_stop|" + convertTime(config.timeFanStop) + "|input\n";
 
   server.send ( 200, "text/html", values ); 
-  Serial.println(__FUNCTION__); 
+  
   
 }
 
@@ -272,7 +272,7 @@ void save_Temperature_configuration_html()
   
   }
   server.send_P ( 200, "text/html", PAGE_Temperature ); 
-  Serial.println(__FUNCTION__); 
+  
   
 }
 

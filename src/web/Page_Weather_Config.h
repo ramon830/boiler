@@ -64,7 +64,7 @@ void send_weather_config_html()
     
   }
   server.send_P ( 200, "text/html", PAGE_WeatherSettings ); 
-  Serial.println(__FUNCTION__); 
+   
    
 }
 
@@ -77,7 +77,7 @@ void send_weather_configuration_values_html()
   values += "OpenWeatherCityId|" +  (String)  config.OpenWeatherCityId +  "|input\n";
  
   server.send ( 200, "text/plain", values);
-  Serial.println(__FUNCTION__); 
+  
 }
 
 //==========================================================
@@ -86,23 +86,23 @@ bool httpRequest() {
   HTTPClient client;
   bool find = false;
   //client.setTimeout(1000);
-  Serial.print("Connecting ");
+  Debug.print("Connecting ");
   client.begin("http://" + weatherHost + "/data/2.5/weather?id=" + (String)config.OpenWeatherCityId + "&appid=" + 
   (String)config.OpenWeatherKey);
   int httpCode = client.GET();
 
   if (httpCode > 0) {
-    Serial.printf("successfully, code: %d\n", httpCode);
+    Debug.printf("successfully, code: %d\n", httpCode);
     if (httpCode == HTTP_CODE_OK) {
       httpData = client.getString();
       if (httpData.indexOf(F("\"main\":{\"temp\":")) > -1) {
        // lastConnectionTime = millis();
         find = true;
       }
-      else Serial.println("Failed, json string is not found");
+      else Debug.println("Failed, json string is not found");
     }
   }
-  else Serial.printf("failed, error: %s\n", client.errorToString(httpCode).c_str());
+  else Debug.printf("failed, error: %s\n", client.errorToString(httpCode).c_str());
 
   //postingInterval = find ? 600L * 1000L : 60L * 1000L;
   client.end();
@@ -113,13 +113,13 @@ bool httpRequest() {
 //==========================================================
 //**** Парсем відповідь OpenWeather 
 bool parseData() {
-  Serial.println(httpData);
+  Debug.println(httpData);
 
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.parseObject(httpData);
 
   if (!root.success()) {
-    Serial.println("Json parsing failed!");
+    Debug.println("Json parsing failed!");
     return false;
   }
 
@@ -144,17 +144,17 @@ void getOpenWeatherData() {
     httpRequest();
     parseData();
   }
-  Serial.println("\nWeather");
-        Serial.printf("id: %d\n", Oweather.id);
-        Serial.printf("main: %s\n", Oweather.main);
-        Serial.printf("description: %s\n", Oweather.descript);
-        Serial.printf("icon: %s\n", Oweather.icon);
-        Serial.printf("temp: %d celsius\n", round(Oweather.temp));
-        Serial.printf("humidity: %d %\n", round(Oweather.humidity));
-        Serial.printf("pressure: %d hPa or %d mmHg\n", round(Oweather.pressure), round(Oweather.pressure * 0.75));
-        Serial.printf("wind's speed: %d\n", round(Oweather.speed));
-        Serial.printf("wind's direction: %d\n", round(Oweather.deg));
-        Serial.println();
+  Debug.println("\nWeather");
+        Debug.printf("id: %d\n", Oweather.id);
+        Debug.printf("main: %s\n", Oweather.main);
+        Debug.printf("description: %s\n", Oweather.descript);
+        Debug.printf("icon: %s\n", Oweather.icon);
+        Debug.printf("temp: %d celsius\n", round(Oweather.temp));
+        Debug.printf("humidity: %d %\n", round(Oweather.humidity));
+        Debug.printf("pressure: %d hPa or %d mmHg\n", round(Oweather.pressure), round(Oweather.pressure * 0.75));
+        Debug.printf("wind's speed: %d\n", round(Oweather.speed));
+        Debug.printf("wind's direction: %d\n", round(Oweather.deg));
+        Debug.println();
 }
 
 // =======================================================================

@@ -79,6 +79,5 @@ void send_index_values_html() {
     values += "relayBedroomOn|" + (String)relayOnToString(relayBedroomOn)  +  "|div\n";
 
   server.send ( 200, "text/plain", values);
-  Serial.println(__FUNCTION__);
-
+  
 }

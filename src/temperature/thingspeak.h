@@ -23,21 +23,21 @@ byte modeRelayToNumber() {
 //****Записуємо дані в thingspeak.com
 void writeToInternet() {
 
-Serial.print("connecting to ");
-Serial.println(hostThingSpeak);
+Debug.print("connecting to ");
+Debug.println(hostThingSpeak);
 
 // Use WiFiClient class to create TCP connections
 WiFiClient client;
 const int httpPort = 80;
 if (!client.connect(hostThingSpeak, httpPort)) {
-Serial.println("connection failed");
-Serial.println();
-Serial.println();
-Serial.println();
+Debug.println("connection failed");
+Debug.println();
+Debug.println();
+Debug.println();
 return;
 }
-Serial.println("connected -)");
-Serial.println("");
+Debug.println("connected -)");
+Debug.println("");
 // Создаем URI для запроса
 String url = "/update?key=";
 url += apikeyThingSpeak;
@@ -54,9 +54,9 @@ url += "&field1=";
     url += "&field6=";
     url += (String)(round(Oweather.temp) - 273.15);
     
-Serial.print("Requesting URL: ");
-Serial.print(hostThingSpeak);
-Serial.println(url);
+Debug.print("Requesting URL: ");
+Debug.print(hostThingSpeak);
+Debug.println(url);
 
 
 
@@ -71,10 +71,10 @@ client.flush(); // ждем отправки всех данных
 while(client.available()){
 String line = client.readStringUntil('\r');
 //char line = client.read();
-Serial.print(line);
+Debug.print(line);
 }
 
-Serial.println();
-Serial.println("closing connection");
-Serial.println();
+Debug.println();
+Debug.println("closing connection");
+Debug.println();
 }

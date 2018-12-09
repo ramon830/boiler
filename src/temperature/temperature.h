@@ -14,16 +14,16 @@ String GetAddressToString(DeviceAddress deviceAddress){
 void SetupDS18B20(){
   DS18B20.begin();
 
-  Serial.print("Parasite power is: "); 
+  Debug.print("Parasite power is: "); 
   if( DS18B20.isParasitePowerMode() ){ 
-    Serial.println("ON");
+    Debug.println("ON");
   }else{
-    Serial.println("OFF");
+    Debug.println("OFF");
   }
   
   numberOfDevices = DS18B20.getDeviceCount();
-  Serial.print( "Device count: " );
-  Serial.println( numberOfDevices );
+  Debug.print( "Device count: " );
+  Debug.println( numberOfDevices );
    
   DS18B20.requestTemperatures();
 
@@ -32,25 +32,25 @@ void SetupDS18B20(){
     // Search the wire for address
     if( DS18B20.getAddress(devAddr[i], i) ){
       //devAddr[i] = tempDeviceAddress;
-      Serial.print("Found device ");
-      Serial.print(i, DEC);
-      Serial.print(" with address: " + GetAddressToString(devAddr[i]));
-      Serial.println();
+      Debug.print("Found device ");
+      Debug.print(i, DEC);
+      Debug.print(" with address: " + GetAddressToString(devAddr[i]));
+      Debug.println();
     }else{
-      Serial.print("Found ghost device at ");
-      Serial.print(i, DEC);
-      Serial.print(" but could not detect address. Check power and cabling");
+      Debug.print("Found ghost device at ");
+      Debug.print(i, DEC);
+      Debug.print(" but could not detect address. Check power and cabling");
     }
 
     //Get resolution of DS18b20
-    Serial.print("Resolution: ");
-    Serial.print(DS18B20.getResolution( devAddr[i] ));
-    Serial.println();
+    Debug.print("Resolution: ");
+    Debug.print(DS18B20.getResolution( devAddr[i] ));
+    Debug.println();
 
     //Read temperature from DS18b20
     float tempC = DS18B20.getTempC( devAddr[i] );
-    Serial.print("Temp C: ");
-    Serial.println(tempC);
+    Debug.print("Temp C: ");
+    Debug.println(tempC);
     
   }
   
@@ -85,7 +85,6 @@ void addTemperature(String address, float temp) {
 float getTemperatureFromFilter(String address) {
   for (int i=0; i<ONE_WIRE_MAX_DEV; i++) {
     if (tempArray[i].address == address) {
-     // rdebugVln("Temp C: %f", tempArray[i].temperature);
       return tempArray[i].temperature;
     }
   }

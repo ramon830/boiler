@@ -91,7 +91,7 @@ void send_network_configuration_html()
   {
     server.send_P ( 200, "text/html", PAGE_NetworkConfiguration ); 
   }
-  Serial.println(__FUNCTION__); 
+  
 }
 
 //==========================================================
@@ -147,7 +147,7 @@ void send_connection_state_values_html()
   values += "connectionstate|" +  state + "|div\n";
   values += "networks|" +  Networks + "|div\n";
   server.send ( 200, "text/plain", values);
-  Serial.println(__FUNCTION__); 
+  
   //AdminTimeOutCounter=0;
 }
 
@@ -177,5 +177,5 @@ void send_network_configuration_values_html()
   values += "dns_3|" +  (String) config.DNS[3] + "|input\n";
   values += "dhcp|" +  (String) (config.dhcp ? "checked" : "") + "|chk\n";
   server.send ( 200, "text/plain", values);
-  Serial.println(__FUNCTION__); 
+  
 }  

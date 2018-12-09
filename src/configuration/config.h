@@ -3,10 +3,10 @@
 //==========================================================
 //****Зчитуємо конфігурацію
 boolean ReadConfig() {
-  Serial.println("Reading Configuration");
+  Debug.println("Reading Configuration");
   if (EEPROM.read(0) == 'C' && EEPROM.read(1) == 'F'  && EEPROM.read(2) == 'G' )
   {
-    Serial.println("Configurarion Found!");
+    Debug.println("Configurarion Found!");
     config.dhcp =   EEPROM.read(16);
     config.isDayLightSaving = EEPROM.read(17);
     config.Update_Time_Via_NTP_Every = EEPROMReadlong(18); // 4 Byte
@@ -70,7 +70,7 @@ boolean ReadConfig() {
   }
   else
   {
-    Serial.println("Configurarion NOT FOUND!!!!");
+    Debug.println("Configurarion NOT FOUND!!!!");
     return false;
   }
 }
@@ -78,20 +78,20 @@ boolean ReadConfig() {
 // =======================================================================
 //****Виводимо в консоль інформацію про мережу
 void printConfigNetwork() {
-  Serial.println("Printing Config");
-  Serial.printf("IP:%d.%d.%d.%d\n", config.IP[0],config.IP[1],config.IP[2],config.IP[3]);
-  Serial.printf("Mask:%d.%d.%d.%d\n", config.Netmask[0],config.Netmask[1],config.Netmask[2],config.Netmask[3]);
-  Serial.printf("Gateway:%d.%d.%d.%d\n", config.Gateway[0],config.Gateway[1],config.Gateway[2],config.Gateway[3]);
-  Serial.printf("DNS:%d.%d.%d.%d\n", config.DNS[0],config.DNS[1],config.DNS[2],config.DNS[3]);
-  Serial.printf("SSID:%s\n", config.ssid.c_str());
-  Serial.printf("PWD:%s\n", config.password.c_str());
+  Debug.println("Printing Config");
+  Debug.printf("IP:%d.%d.%d.%d\n", config.IP[0],config.IP[1],config.IP[2],config.IP[3]);
+  Debug.printf("Mask:%d.%d.%d.%d\n", config.Netmask[0],config.Netmask[1],config.Netmask[2],config.Netmask[3]);
+  Debug.printf("Gateway:%d.%d.%d.%d\n", config.Gateway[0],config.Gateway[1],config.Gateway[2],config.Gateway[3]);
+  Debug.printf("DNS:%d.%d.%d.%d\n", config.DNS[0],config.DNS[1],config.DNS[2],config.DNS[3]);
+  Debug.printf("SSID:%s\n", config.ssid.c_str());
+  Debug.printf("PWD:%s\n", config.password.c_str());
 }
 
 // =======================================================================
 //****Виводимо в консоль інформацію про мережу
 void defaultConfig() {
   // DEFAULT CONFIG
-    Serial.println("Setting AP mode default parameters");
+    Debug.println("Setting AP mode default parameters");
     config.ssid = "UFA Iot";       // SSID of access point
     config.password = "" ;   // password of access point
     config.dhcp = true;
@@ -144,8 +144,8 @@ void defaultConfig() {
    
     WiFi.mode(WIFI_AP);  
     WiFi.softAP(config.ssid.c_str());
-    Serial.print("Wifi ip:");
-    Serial.println(WiFi.softAPIP());
+    Debug.print("Wifi ip:");
+    Debug.println(WiFi.softAPIP());
 }
 
 // =======================================================================
@@ -161,7 +161,7 @@ void configLoad() {
   if (CFG_saved)  //якщо конфігурація ще не збережена, завантаження за замовчуванням
   {    
       // Підключення ESP8266 до локальної мережі WIFI в режимі станції
-      Serial.println("Booting");
+      Debug.println("Booting");
       WiFi.mode(WIFI_STA);
     // Якщо dhcp не сконфігуровано
     if (!config.dhcp)
@@ -177,8 +177,8 @@ void configLoad() {
   
         if(WIFI_connected!= WL_CONNECTED )
         {
-          Serial.println("Connection Failed! activating to AP mode...");
-          Serial.print("Wifi ip:");Serial.println(WiFi.localIP());
+          Debug.println("Connection Failed! activating to AP mode...");
+          Debug.print("Wifi ip:");Debug.println(WiFi.localIP());
         }
   }
   if ( (WIFI_connected!= WL_CONNECTED) or !CFG_saved)
@@ -192,7 +192,7 @@ void configLoad() {
 void startHTTPServer() {
 
   server.on ( "/", []() {
-      Serial.println("index.html");
+      Debug.println("index.html");
       server.send_P ( 200, "text/html", PAGE_Index);  
     }  );
 
@@ -200,12 +200,12 @@ void startHTTPServer() {
    
 
   server.on ( "/admin", []() {
-      Serial.println("admin.html");
+      Debug.println("admin.html");
       server.send_P ( 200, "text/html", PAGE_AdminMainPage);  
     }  );
   
     server.on ( "/favicon.ico",   []() {
-      Serial.println("favicon.ico");
+      Debug.println("favicon.ico");
       server.send( 200, "text/html", "" );
     }  );
 
@@ -214,7 +214,7 @@ void startHTTPServer() {
 
      // Info Page
     server.on ( "/info.html", []() {
-      Serial.println("info.html");
+      Debug.println("info.html");
       server.send_P ( 200, "text/html", PAGE_Information );
     }  );
 
@@ -225,11 +225,11 @@ void startHTTPServer() {
     //server.on ( "/temperature-config.html", send_Temperature_configuration_html);
     
     server.on ( "/style.css", []() {
-      Serial.println("style.css");
+      Debug.println("style.css");
       server.send_P ( 200, "text/plain", PAGE_Style_css );
     } );
     server.on ( "/microajax.js", []() {
-      Serial.println("microajax.js");
+      Debug.println("microajax.js");
       server.send_P ( 200, "text/plain", PAGE_microajax_js );
     } );
     server.on ( "/admin/values", send_network_configuration_values_html );
@@ -241,11 +241,11 @@ void startHTTPServer() {
     server.on ( "/admin/temperature", send_Temperature_configuration_html);
     //server.on ( "/admin/save-weather-config",     send_weather_config_html);
      server.onNotFound ( []() {
-      Serial.println("Page Not Found");
+      Debug.println("Page Not Found");
       server.send ( 400, "text/html", "Page not Found" );
     }  );
     server.begin();
-    Serial.println( "HTTP server started" );
+    Debug.println( "HTTP server started" );
 }
 
 // =======================================================================
@@ -273,39 +273,44 @@ void startArduinoOTA() {
     }
 
     // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-    Serial.println("Start updating " + type);
+    Debug.println("Start updating " + type);
   });
   ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
+    Debug.println("\nEnd");
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+    Debug.printf("Progress: %u%%\r", (progress / (total / 100)));
   });
   ArduinoOTA.onError([](ota_error_t error) {
-    Serial.printf("Error[%u]: ", error);
+    Debug.printf("Error[%u]: ", error);
     if (error == OTA_AUTH_ERROR) {
-      Serial.println("Auth Failed");
+      Debug.println("Auth Failed");
     } else if (error == OTA_BEGIN_ERROR) {
-      Serial.println("Begin Failed");
+      Debug.println("Begin Failed");
     } else if (error == OTA_CONNECT_ERROR) {
-      Serial.println("Connect Failed");
+      Debug.println("Connect Failed");
     } else if (error == OTA_RECEIVE_ERROR) {
-      Serial.println("Receive Failed");
+      Debug.println("Receive Failed");
     } else if (error == OTA_END_ERROR) {
-      Serial.println("End Failed");
+      Debug.println("End Failed");
     }
   });
   ArduinoOTA.begin();
-  Serial.println("Ready");
-  Serial.print("IP address: ");
-Serial.println(WiFi.localIP());
+  Debug.println("Ready");
+  Debug.print("IP address: ");
+Debug.println(WiFi.localIP());
 }
 
 // =======================================================================
 //**** Конфігурація логів
 void startLog() {
-  Debug.begin(config.IP[0]+(String)"."+config.IP[1]+(String)"."+config.IP[2]+(String)"."+config.IP[3]);
+  MDNS.begin(HOST_NAME);
+  MDNS.addService("telnet", "tcp", 23);
+  Debug.begin(HOST_NAME);
   Debug.setResetCmdEnabled(true);
   Debug.showTime(true);
+  Debug.showProfiler(true); // Profiler
+	Debug.showColors(true); // Colors
+
 }
 

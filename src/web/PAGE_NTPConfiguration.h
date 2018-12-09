@@ -161,8 +161,7 @@ void send_NTP_configuration_html()
   
   }
   server.send_P ( 200, "text/html", PAGE_NTPConfiguration ); 
-  Serial.println(__FUNCTION__); 
-  
+    
 }
 
 // =======================================================================
@@ -178,7 +177,6 @@ void send_NTP_configuration_values_html()
   values += "date|" + getDateValuesHtml()  + "|input\n";
   values += "time|" + getTimeValuesHtml() + "|input\n";
   server.send ( 200, "text/plain", values);
-  Serial.println(__FUNCTION__); 
-  
+
 }
 
