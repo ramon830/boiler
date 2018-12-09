@@ -9,6 +9,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <ArduinoOTA.h>
+#include "RemoteDebug.h"
 #include "configuration/global.h"
 #include "clock/NTP.h"
 #include "clock/Time.h"
@@ -36,6 +37,7 @@ void setup() {
   configLoad(); 
   startHTTPServer();
   startArduinoOTA(); 
+  startLog();
   SetupDS18B20();
   relaySetup();
   setupAddressTemperature();

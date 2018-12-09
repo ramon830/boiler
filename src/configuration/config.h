@@ -301,3 +301,11 @@ void startArduinoOTA() {
 Serial.println(WiFi.localIP());
 }
 
+// =======================================================================
+//**** Конфігурація логів
+void startLog() {
+  Debug.begin(config.IP[0]+(String)"."+config.IP[1]+(String)"."+config.IP[2]+(String)"."+config.IP[3]);
+  Debug.setResetCmdEnabled(true);
+  Debug.showTime(true);
+}
+

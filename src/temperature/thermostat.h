@@ -77,6 +77,53 @@ int stopTime, boolean mode, boolean relayOn) { //mode - true нагрів, false
     
 }
 
+// =======================================================================
+//****Вихідний день режим
+boolean sunday(String address) {
+return thermostat(config.sundayTemperature, config.sundayGiterezis, 
+                        getTemperatureFromFilter(smallRoom),
+                        config.timeSundayStart, config.timeSundayStop, true, relayBoilerOn);
+}
+
+// =======================================================================
+//****Нічний режим
+boolean night(String address) {
+return   thermostat(config.nightTemperature, config.nightGiterezis, 
+                        getTemperatureFromFilter(address),
+                        0, 299, true, relayBoilerOn);
+}
+
+// =======================================================================
+//****Ранковий режим
+boolean morning(String address) {
+return thermostat(config.morningTemperature, config.morningGiterezis, 
+                        getTemperatureFromFilter(address),
+                        config.timeMorningStart, config.timeMorningStop, true, relayBoilerOn);
+}
+
+// =======================================================================
+//****Денний режим
+boolean day(String address) {
+return thermostat(config.dayTemperature, config.dayGiterezis, 
+                        getTemperatureFromFilter(address),
+                        config.timeDayStart, config.timeDayStop, true, relayBoilerOn);
+}
+
+// =======================================================================
+//****Вечірній режим
+boolean evening(String address) {
+return thermostat(config.eveningTemperature, config.eveningGiterezis, 
+                        getTemperatureFromFilter(address),
+                        config.timeEveningStart, config.timeEveningStop, true, relayBoilerOn);
+}
+
+// =======================================================================
+//****Вентилятор
+boolean fan(String address, boolean relay) {
+return thermostat(config.fanTemperature, config.fanGiterezis, 
+                        getTemperatureFromFilter(address),
+                        config.timeFanStart, config.timeFanStop, false, relaySmallroomOn);
+}
 
 // =======================================================================
 //****Управління реле
@@ -86,88 +133,37 @@ void thermostatControl() {
        boolean tempSmallRoom;
        boolean tempBedRoom;
        if (wd == "Субота" || wd == "Неділя") {
-                tempSmallRoom = thermostat(config.sundayTemperature, config.sundayGiterezis, 
-        getTemperatureFromFilter(smallRoom),
-        config.timeSundayStart, config.timeSundayStop, true, relayBoilerOn);
-                tempBedRoom = thermostat(config.sundayTemperature, config.sundayGiterezis, 
-        getTemperatureFromFilter(bedRoom),
-        config.timeSundayStart, config.timeSundayStop, true, relayBoilerOn);
-         
+           if(night(smallRoom)) {tempSmallRoom = true;}
+                else if(sunday(smallRoom)){tempSmallRoom = true;}
+                    else {tempSmallRoom = false; }
+            if(night(bedRoom)) {tempBedRoom  = true;}
+                else if(sunday(bedRoom)){tempBedRoom  = true;}
+                    else {tempBedRoom  = false;}
+                
         } else {
-           
-                if(thermostat(config.nightTemperature, config.nightGiterezis, 
-                    getTemperatureFromFilter(smallRoom),
-                    config.timeNightStart, config.timeNightStop, true, relayBoilerOn)) {
-                      tempSmallRoom = true; 
-                } else {
-                if (thermostat(config.morningTemperature, config.morningGiterezis, 
-                    getTemperatureFromFilter(smallRoom),
-                    config.timeMorningStart, config.timeMorningStop, true, relayBoilerOn)) {
-                        tempSmallRoom = true;
-                    } else {
-                        if (thermostat(config.dayTemperature, config.dayGiterezis, 
-                        getTemperatureFromFilter(smallRoom),
-                        config.timeDayStart, config.timeDayStop, true, relayBoilerOn)) {
-                            tempSmallRoom = true;
-                        } else {
-                                if (thermostat(config.eveningTemperature, config.eveningGiterezis, 
-                            getTemperatureFromFilter(smallRoom),
-                            config.timeEveningStart, config.timeEveningStop, true, relayBoilerOn)) {
-                                tempSmallRoom = true;
-                            } else {
-                               tempSmallRoom = false; 
-                            }  
-                        }   
-                    } 
-                      
-                }
-
-                 if(thermostat(config.nightTemperature, config.nightGiterezis, 
-                    getTemperatureFromFilter(bedRoom),
-                    config.timeNightStart, config.timeNightStop, true, relayBoilerOn)) {
-                     tempBedRoom  = true; 
-                } else {
-                if (thermostat(config.morningTemperature, config.morningGiterezis, 
-                    getTemperatureFromFilter(bedRoom),
-                    config.timeMorningStart, config.timeMorningStop, true,relayBoilerOn)) {
-                        tempBedRoom= true;
-                    } else {
-                        if (thermostat(config.dayTemperature, config.dayGiterezis, 
-                        getTemperatureFromFilter(bedRoom),
-                        config.timeDayStart, config.timeDayStop, true, relayBoilerOn)) {
-                            tempBedRoom = true;
-                        } else {
-                                if (thermostat(config.eveningTemperature, config.eveningGiterezis, 
-                            getTemperatureFromFilter(bedRoom),
-                            config.timeEveningStart, config.timeEveningStop, true, relayBoilerOn)) {
-                                tempBedRoom = true;
-                            } else {
-                               tempBedRoom = false; 
-                            }  
-                        }   
-                    } 
-                      
-                }
-
-
-
-        
+            if(night(smallRoom)) {tempSmallRoom = true;}
+                else if (morning(smallRoom)) {tempSmallRoom = true;}
+                    else if (day(smallRoom)) {tempSmallRoom = true;}
+                        else if (evening(smallRoom)) {tempSmallRoom = true;}
+                            else {tempSmallRoom = false;}  
+            if(night(bedRoom)) {tempBedRoom  = true;}
+                else if (morning(bedRoom)) {tempBedRoom= true;}
+                    else if (day(bedRoom)) {tempBedRoom = true;}
+                        else if (evening(bedRoom)) {tempBedRoom = true;}
+                            else {tempBedRoom = false;}  
         }
         if (tempSmallRoom || tempBedRoom) {
                 relayBoilerOn = true;
-            } else {
-                relayBoilerOn = false;
-            }
+                } else {
+                    relayBoilerOn = false;
+                }
+        
    }
    if (force(config.relaySmallroom, &relaySmallroomOn)==false) {
-       relaySmallroomOn = thermostat(config.fanTemperature, config.fanGiterezis, 
-       getTemperatureFromFilter(radiatorSmallRoom),
-       config.timeFanStart, config.timeFanStop, false, relaySmallroomOn);
-   }
+       relaySmallroomOn = fan(radiatorSmallRoom, relaySmallroomOn);
+    }
    if (force(config.relayBedroom, &relayBedroomOn)==false) {
-       relayBedroomOn = thermostat(config.fanTemperature, config.fanGiterezis, 
-       getTemperatureFromFilter(radiatorBedRoom),
-       config.timeFanStart, config.timeFanStop, false, relayBedroomOn);
+       relayBedroomOn = fan(radiatorBedRoom, relayBedroomOn);
    }
   relayOn();
 }

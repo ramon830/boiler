@@ -113,6 +113,8 @@ float temperature;
 
 const char* hostThingSpeak = "api.thingspeak.com"; //Адрес для передачі данних
 const char* apikeyThingSpeak="X7AJ51P6BMPP2MMJ"; // ключ від thingsspeak.com
+
+RemoteDebug Debug;
  
 //==========================================================
 //****Записуємо числа типу String

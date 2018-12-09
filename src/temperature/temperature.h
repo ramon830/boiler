@@ -24,8 +24,7 @@ void SetupDS18B20(){
   numberOfDevices = DS18B20.getDeviceCount();
   Serial.print( "Device count: " );
   Serial.println( numberOfDevices );
-
- 
+   
   DS18B20.requestTemperatures();
 
   // Loop through each device, print out address
@@ -52,6 +51,7 @@ void SetupDS18B20(){
     float tempC = DS18B20.getTempC( devAddr[i] );
     Serial.print("Temp C: ");
     Serial.println(tempC);
+    
   }
   
 }
@@ -69,6 +69,9 @@ void setupAddressTemperature() {
 //****Добавляння температури 
 void addTemperature(String address, float temp) {
   for (int i=0; i<ONE_WIRE_MAX_DEV; i++) {
+    if (temp < 0 || temp > 80) {
+      SetupDS18B20();
+    }
     if (tempArray[i].address == address) {
       tempArray[i].temperature = temp;
       break;
@@ -82,6 +85,7 @@ void addTemperature(String address, float temp) {
 float getTemperatureFromFilter(String address) {
   for (int i=0; i<ONE_WIRE_MAX_DEV; i++) {
     if (tempArray[i].address == address) {
+     // rdebugVln("Temp C: %f", tempArray[i].temperature);
       return tempArray[i].temperature;
     }
   }
@@ -104,6 +108,8 @@ void TempLoop(){
     DS18B20.setWaitForConversion(false); //No waiting for measurement
     DS18B20.requestTemperatures(); //Initiate the temperature measurement
   
+ 
+ 
   
 }
 
