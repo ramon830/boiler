@@ -6,7 +6,7 @@ const char PAGE_Index[] PROGMEM = R"=====(
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="style.css" type="text/css" />
 <script src="microajax.js"></script> 
-<a href="/admin"  class="btn btn--s"><</a>&nbsp;&nbsp;<strong>Мережева інформація</strong>
+<a href="/admin"  class="btn btn--s"><</a>&nbsp;&nbsp;<strong>Головна сторінка</strong>
 <hr>
 <table border="0"  cellspacing="0" cellpadding="3" style="width:640px" >
 <tr><td align="right">Дата :</td><td><span id="x_clock"></span></td></tr>

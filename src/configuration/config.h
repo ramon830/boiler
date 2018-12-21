@@ -2,15 +2,16 @@
 
 //==========================================================
 //****Зчитуємо конфігурацію
-boolean ReadConfig() {
+boolean ReadConfig()
+{
   Debug.println("Reading Configuration");
-  if (EEPROM.read(0) == 'C' && EEPROM.read(1) == 'F'  && EEPROM.read(2) == 'G' )
+  if (EEPROM.read(0) == 'C' && EEPROM.read(1) == 'F' && EEPROM.read(2) == 'G')
   {
     Debug.println("Configurarion Found!");
-    config.dhcp =   EEPROM.read(16);
+    config.dhcp = EEPROM.read(16);
     config.isDayLightSaving = EEPROM.read(17);
     config.Update_Time_Via_NTP_Every = EEPROMReadlong(18); // 4 Byte
-    config.timeZone = EEPROMReadlong(22); // 4 Byte
+    config.timeZone = EEPROMReadlong(22);                  // 4 Byte
     config.IP[0] = EEPROM.read(32);
     config.IP[1] = EEPROM.read(33);
     config.IP[2] = EEPROM.read(34);
@@ -33,8 +34,8 @@ boolean ReadConfig() {
     config.OpenWeatherKey = ReadStringFromEEPROM(160);
     config.OpenWeatherCityId = ReadStringFromEEPROM(192);
     config.relayBoiler = EEPROM.read(224);
-    config.relaySmallroom = EEPROM.read(225);                
-    config.relayBedroom = EEPROM.read(226);   
+    config.relaySmallroom = EEPROM.read(225);
+    config.relayBedroom = EEPROM.read(226);
 
     config.nightTemperature = EEPROM_float_read(227);
     config.nightGiterezis = EEPROM_float_read(231);
@@ -50,7 +51,7 @@ boolean ReadConfig() {
     config.eveningGiterezis = EEPROM_float_read(255);
     config.timeEveningStart = EEPROMReadInt(259);
     config.timeEveningStop = EEPROMReadInt(261);
-    
+
     config.sundayTemperature = EEPROM_float_read(263);
     config.sundayGiterezis = EEPROM_float_read(267);
     config.timeSundayStart = EEPROMReadInt(271);
@@ -77,80 +78,93 @@ boolean ReadConfig() {
 
 // =======================================================================
 //****Виводимо в консоль інформацію про мережу
-void printConfigNetwork() {
+void printConfigNetwork()
+{
   Debug.println("Printing Config");
-  Debug.printf("IP:%d.%d.%d.%d\n", config.IP[0],config.IP[1],config.IP[2],config.IP[3]);
-  Debug.printf("Mask:%d.%d.%d.%d\n", config.Netmask[0],config.Netmask[1],config.Netmask[2],config.Netmask[3]);
-  Debug.printf("Gateway:%d.%d.%d.%d\n", config.Gateway[0],config.Gateway[1],config.Gateway[2],config.Gateway[3]);
-  Debug.printf("DNS:%d.%d.%d.%d\n", config.DNS[0],config.DNS[1],config.DNS[2],config.DNS[3]);
+  Debug.printf("IP:%d.%d.%d.%d\n", config.IP[0], config.IP[1], config.IP[2], config.IP[3]);
+  Debug.printf("Mask:%d.%d.%d.%d\n", config.Netmask[0], config.Netmask[1], config.Netmask[2], config.Netmask[3]);
+  Debug.printf("Gateway:%d.%d.%d.%d\n", config.Gateway[0], config.Gateway[1], config.Gateway[2], config.Gateway[3]);
+  Debug.printf("DNS:%d.%d.%d.%d\n", config.DNS[0], config.DNS[1], config.DNS[2], config.DNS[3]);
   Debug.printf("SSID:%s\n", config.ssid.c_str());
   Debug.printf("PWD:%s\n", config.password.c_str());
 }
 
 // =======================================================================
 //****Виводимо в консоль інформацію про мережу
-void defaultConfig() {
+void defaultConfig()
+{
   // DEFAULT CONFIG
-    Debug.println("Setting AP mode default parameters");
-    config.ssid = "UFA Iot";       // SSID of access point
-    config.password = "" ;   // password of access point
-    config.dhcp = true;
-    config.IP[0] = 192; config.IP[1] = 168; config.IP[2] = 1; config.IP[3] = 105;
-    config.Netmask[0] = 255; config.Netmask[1] = 255; config.Netmask[2] = 255; config.Netmask[3] = 0;
-    config.Gateway[0] = 192; config.Gateway[1] = 168; config.Gateway[2] = 1; config.Gateway[3] = 1;
-    config.DNS[0] = 192; config.DNS[1] = 168; config.DNS[2] = 1; config.DNS[3] = 1;
-    config.ntpServerName = "2.ua.pool.ntp.org"; // to be adjusted to PT ntp.ist.utl.pt
-    config.Update_Time_Via_NTP_Every =  60;
-    config.timeZone = 2;
-    config.isDayLightSaving = true;
-    config.OpenWeatherKey = "7e12124700dd5ea5e1a8f081bd6f6e48";
-    config.OpenWeatherCityId = "707099";
+  Debug.println("Setting AP mode default parameters");
+  config.ssid = "UFA Iot"; // SSID of access point
+  config.password = "";    // password of access point
+  config.dhcp = true;
+  config.IP[0] = 192;
+  config.IP[1] = 168;
+  config.IP[2] = 1;
+  config.IP[3] = 105;
+  config.Netmask[0] = 255;
+  config.Netmask[1] = 255;
+  config.Netmask[2] = 255;
+  config.Netmask[3] = 0;
+  config.Gateway[0] = 192;
+  config.Gateway[1] = 168;
+  config.Gateway[2] = 1;
+  config.Gateway[3] = 1;
+  config.DNS[0] = 192;
+  config.DNS[1] = 168;
+  config.DNS[2] = 1;
+  config.DNS[3] = 1;
+  config.ntpServerName = "2.ua.pool.ntp.org"; // to be adjusted to PT ntp.ist.utl.pt
+  config.Update_Time_Via_NTP_Every = 60;
+  config.timeZone = 2;
+  config.isDayLightSaving = true;
+  config.OpenWeatherKey = "7e12124700dd5ea5e1a8f081bd6f6e48";
+  config.OpenWeatherCityId = "707099";
 
-    config.relayBoiler = 0;
-    config.relayBedroom = 0;
-    config.relaySmallroom = 0; 
+  config.relayBoiler = 0;
+  config.relayBedroom = 0;
+  config.relaySmallroom = 0;
 
-    config.nightTemperature = 17.0;
-    config.nightGiterezis = 0.5;
-    config.timeNightStart = 0;
-    config.timeNightStop = 299;
+  config.nightTemperature = 17.0;
+  config.nightGiterezis = 0.5;
+  config.timeNightStart = 0;
+  config.timeNightStop = 299;
 
-    config.morningTemperature = 20.0;
-    config.morningGiterezis = 0.5;
-    config.timeMorningStart = 300;
-    config.timeMorningStop = 389;
+  config.morningTemperature = 20.0;
+  config.morningGiterezis = 0.5;
+  config.timeMorningStart = 300;
+  config.timeMorningStop = 389;
 
-    config.dayTemperature = 19.0;
-    config.dayGiterezis = 0.5;
-    config.timeDayStart = 390;
-    config.timeDayStop = 959;
+  config.dayTemperature = 19.0;
+  config.dayGiterezis = 0.5;
+  config.timeDayStart = 390;
+  config.timeDayStop = 959;
 
-    config.eveningTemperature = 21;
-    config.eveningGiterezis = 0.5;
-    config.timeEveningStart = 960;
-    config.timeEveningStop = 1379;
+  config.eveningTemperature = 21;
+  config.eveningGiterezis = 0.5;
+  config.timeEveningStart = 960;
+  config.timeEveningStop = 1379;
 
-    config.sundayTemperature = 21;
-    config.sundayGiterezis = 0.5;
-    config.timeSundayStart = 360;
-    config.timeSundayStop = 1379;
+  config.sundayTemperature = 21;
+  config.sundayGiterezis = 0.5;
+  config.timeSundayStart = 360;
+  config.timeSundayStop = 1379;
 
-    config.fanTemperature = 40;
-    config.fanGiterezis = 10;
-    config.timeFanStart = 360;
-    config.timeFanStop = 1379;
+  config.fanTemperature = 40;
+  config.fanGiterezis = 10;
+  config.timeFanStart = 360;
+  config.timeFanStop = 1379;
 
-
-   
-    WiFi.mode(WIFI_AP);  
-    WiFi.softAP(config.ssid.c_str());
-    Debug.print("Wifi ip:");
-    Debug.println(WiFi.softAPIP());
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(config.ssid.c_str());
+  Debug.print("Wifi ip:");
+  Debug.println(WiFi.softAPIP());
 }
 
 // =======================================================================
 //**** Завантаження мережі
-void configLoad() {
+void configLoad()
+{
   bool CFG_saved = false;
   int WIFI_connected = false;
   Serial.begin(MonitorSpeed);
@@ -158,30 +172,31 @@ void configLoad() {
   //**** Конфігурація мережі
   EEPROM.begin(EEPROMSize); // Визначити простір EEPROM 512Bytes для зберігання даних
   CFG_saved = ReadConfig();
-  if (CFG_saved)  //якщо конфігурація ще не збережена, завантаження за замовчуванням
-  {    
-      // Підключення ESP8266 до локальної мережі WIFI в режимі станції
-      Debug.println("Booting");
-      WiFi.mode(WIFI_STA);
+  if (CFG_saved) //якщо конфігурація ще не збережена, завантаження за замовчуванням
+  {
+    // Підключення ESP8266 до локальної мережі WIFI в режимі станції
+    Debug.println("Booting");
+    WiFi.mode(WIFI_STA);
     // Якщо dhcp не сконфігуровано
     if (!config.dhcp)
     {
-      WiFi.config(IPAddress(config.IP[0], config.IP[1], config.IP[2], config.IP[3] ),
-        IPAddress(config.Gateway[0], config.Gateway[1], config.Gateway[2], config.Gateway[3] ),
-          IPAddress(config.Netmask[0], config.Netmask[1], config.Netmask[2], config.Netmask[3] ),
-            IPAddress(config.DNS[0], config.DNS[1], config.DNS[2], config.DNS[3] ));
+      WiFi.config(IPAddress(config.IP[0], config.IP[1], config.IP[2], config.IP[3]),
+                  IPAddress(config.Gateway[0], config.Gateway[1], config.Gateway[2], config.Gateway[3]),
+                  IPAddress(config.Netmask[0], config.Netmask[1], config.Netmask[2], config.Netmask[3]),
+                  IPAddress(config.DNS[0], config.DNS[1], config.DNS[2], config.DNS[3]));
     }
-        WiFi.begin(config.ssid.c_str(), config.password.c_str());
-        printConfigNetwork();
-        WIFI_connected = WiFi.waitForConnectResult();
-  
-        if(WIFI_connected!= WL_CONNECTED )
-        {
-          Debug.println("Connection Failed! activating to AP mode...");
-          Debug.print("Wifi ip:");Debug.println(WiFi.localIP());
-        }
+    WiFi.begin(config.ssid.c_str(), config.password.c_str());
+    printConfigNetwork();
+    WIFI_connected = WiFi.waitForConnectResult();
+
+    if (WIFI_connected != WL_CONNECTED)
+    {
+      Debug.println("Connection Failed! activating to AP mode...");
+      Debug.print("Wifi ip:");
+      Debug.println(WiFi.localIP());
+    }
   }
-  if ( (WIFI_connected!= WL_CONNECTED) or !CFG_saved)
+  if ((WIFI_connected != WL_CONNECTED) or !CFG_saved)
   {
     defaultConfig();
   }
@@ -189,68 +204,68 @@ void configLoad() {
 
 // =======================================================================
 //**** Старт сервера
-void startHTTPServer() {
+void startHTTPServer()
+{
 
-  server.on ( "/", []() {
-      Debug.println("index.html");
-      server.send_P ( 200, "text/html", PAGE_Index);  
-    }  );
+  server.on("/", []() {
+    Debug.println("index.html");
+    server.send_P(200, "text/html", PAGE_Index);
+  });
 
-   server.on ( "/temperature-config.html", save_Temperature_configuration_html);  
-   
+  server.on("/temperature-config.html", save_Temperature_configuration_html);
 
-  server.on ( "/admin", []() {
-      Debug.println("admin.html");
-      server.send_P ( 200, "text/html", PAGE_AdminMainPage);  
-    }  );
-  
-    server.on ( "/favicon.ico",   []() {
-      Debug.println("favicon.ico");
-      server.send( 200, "text/html", "" );
-    }  );
+  server.on("/admin", []() {
+    Debug.println("admin.html");
+    server.send_P(200, "text/html", PAGE_AdminMainPage);
+  });
 
-    // Network config
-    server.on ( "/config.html", send_network_configuration_html);
+  server.on("/favicon.ico", []() {
+    Debug.println("favicon.ico");
+    server.send(200, "text/html", "");
+  });
 
-     // Info Page
-    server.on ( "/info.html", []() {
-      Debug.println("info.html");
-      server.send_P ( 200, "text/html", PAGE_Information );
-    }  );
+  // Network config
+  server.on("/config.html", send_network_configuration_html);
 
-    
-    server.on ( "/ntp.html", send_NTP_configuration_html );
-    server.on ( "/weather-config.html", send_weather_config_html  );
+  // Info Page
+  server.on("/info.html", []() {
+    Debug.println("info.html");
+    server.send_P(200, "text/html", PAGE_Information);
+  });
 
-    //server.on ( "/temperature-config.html", send_Temperature_configuration_html);
-    
-    server.on ( "/style.css", []() {
-      Debug.println("style.css");
-      server.send_P ( 200, "text/plain", PAGE_Style_css );
-    } );
-    server.on ( "/microajax.js", []() {
-      Debug.println("microajax.js");
-      server.send_P ( 200, "text/plain", PAGE_microajax_js );
-    } );
-    server.on ( "/admin/values", send_network_configuration_values_html );
-    server.on ( "/admin/connectionstate", send_connection_state_values_html );
-    server.on ( "/admin/infovalues", send_information_values_html );
-    server.on ( "/admin/ntpvalues", send_NTP_configuration_values_html );
-    server.on ( "/admin/weather-Settings-values", send_weather_configuration_values_html);
-    server.on ( "/admin/index-values", send_index_values_html);
-    server.on ( "/admin/temperature", send_Temperature_configuration_html);
-    //server.on ( "/admin/save-weather-config",     send_weather_config_html);
-     server.onNotFound ( []() {
-      Debug.println("Page Not Found");
-      server.send ( 400, "text/html", "Page not Found" );
-    }  );
-    server.begin();
-    Debug.println( "HTTP server started" );
+  server.on("/ntp.html", send_NTP_configuration_html);
+  server.on("/weather-config.html", send_weather_config_html);
+
+  //server.on ( "/temperature-config.html", send_Temperature_configuration_html);
+
+  server.on("/style.css", []() {
+    Debug.println("style.css");
+    server.send_P(200, "text/plain", PAGE_Style_css);
+  });
+  server.on("/microajax.js", []() {
+    Debug.println("microajax.js");
+    server.send_P(200, "text/plain", PAGE_microajax_js);
+  });
+  server.on("/admin/values", send_network_configuration_values_html);
+  server.on("/admin/connectionstate", send_connection_state_values_html);
+  server.on("/admin/infovalues", send_information_values_html);
+  server.on("/admin/ntpvalues", send_NTP_configuration_values_html);
+  server.on("/admin/weather-Settings-values", send_weather_configuration_values_html);
+  server.on("/admin/index-values", send_index_values_html);
+  server.on("/admin/temperature", send_Temperature_configuration_html);
+  //server.on ( "/admin/save-weather-config",     send_weather_config_html);
+  server.onNotFound([]() {
+    Debug.println("Page Not Found");
+    server.send(400, "text/html", "Page not Found");
+  });
+  server.begin();
+  Debug.println("HTTP server started");
 }
 
 // =======================================================================
 //**** Конфігурація реле
-void relaySetup() {
+void relaySetup()
+{
   pinMode(5, OUTPUT); //D1
   digitalWrite(5, 1);
   pinMode(4, OUTPUT); //D2
@@ -263,12 +278,16 @@ void relaySetup() {
 
 // =======================================================================
 //**** Конфігурація безпровідної прошивки
-void startArduinoOTA() {
+void startArduinoOTA()
+{
   ArduinoOTA.onStart([]() {
     String type;
-    if (ArduinoOTA.getCommand() == U_FLASH) {
+    if (ArduinoOTA.getCommand() == U_FLASH)
+    {
       type = "sketch";
-    } else { // U_SPIFFS
+    }
+    else
+    { // U_SPIFFS
       type = "filesystem";
     }
 
@@ -283,34 +302,42 @@ void startArduinoOTA() {
   });
   ArduinoOTA.onError([](ota_error_t error) {
     Debug.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) {
+    if (error == OTA_AUTH_ERROR)
+    {
       Debug.println("Auth Failed");
-    } else if (error == OTA_BEGIN_ERROR) {
+    }
+    else if (error == OTA_BEGIN_ERROR)
+    {
       Debug.println("Begin Failed");
-    } else if (error == OTA_CONNECT_ERROR) {
+    }
+    else if (error == OTA_CONNECT_ERROR)
+    {
       Debug.println("Connect Failed");
-    } else if (error == OTA_RECEIVE_ERROR) {
+    }
+    else if (error == OTA_RECEIVE_ERROR)
+    {
       Debug.println("Receive Failed");
-    } else if (error == OTA_END_ERROR) {
+    }
+    else if (error == OTA_END_ERROR)
+    {
       Debug.println("End Failed");
     }
   });
   ArduinoOTA.begin();
   Debug.println("Ready");
   Debug.print("IP address: ");
-Debug.println(WiFi.localIP());
+  Debug.println(WiFi.localIP());
 }
 
 // =======================================================================
 //**** Конфігурація логів
-void startLog() {
+void startLog()
+{
   MDNS.begin(HOST_NAME);
   MDNS.addService("telnet", "tcp", 23);
   Debug.begin(HOST_NAME);
   Debug.setResetCmdEnabled(true);
   Debug.showTime(true);
   Debug.showProfiler(true); // Profiler
-	Debug.showColors(true); // Colors
-
+  Debug.showColors(true);   // Colors
 }
-

@@ -9,7 +9,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <ArduinoOTA.h>
-#include <DNSServer.h> 
+#include <DNSServer.h>
 #include "RemoteDebug.h"
 #include "configuration/global.h"
 #include "clock/NTP.h"
@@ -28,33 +28,35 @@
 #include "web/Index.h"
 #include "configuration/config.h"
 
-
-
-
-
 // =======================================================================
-void setup() {
+void setup()
+{
   Serial.begin(MonitorSpeed);
-  configLoad(); 
+  configLoad();
   startHTTPServer();
-  startArduinoOTA(); 
+  startArduinoOTA();
   startLog();
   SetupDS18B20();
   relaySetup();
   setupAddressTemperature();
-  tickerScheduler.add(0, 1000, [&](void*){ISRsecondTick();}, nullptr, true); //Обновлення годинника щосекунди
-  tickerScheduler.add(1, config.Update_Time_Via_NTP_Every*60*1000, [&](void*){getNTPtime();}, nullptr, false); // Синхронізація з NTP сервером
-  tickerScheduler.add(2, 30*1000, [&](void*){firstGetNTPtime();}, nullptr, true); //Перше обновлення годинника
-  tickerScheduler.add(3, 15*60*1000, [&](void*){getOpenWeatherData();}, nullptr, true); //Обновлення погоди Open Weather
-  tickerScheduler.add(4, 30*1000, [&](void*){TempLoop();}, nullptr, true); //Вимірювання температури
-  tickerScheduler.add(5, 1*1000, [&](void*){thermostatControl();}, nullptr, true); //Робота з реле
-  tickerScheduler.add(6, 30*1000, [&](void*){writeToInternet();}, nullptr, true); //Записуємо дані в thingspeak.com
+  tickerScheduler.add(0, 1000, [&](void *) { ISRsecondTick(); }, nullptr, true);                                       //Обновлення годинника щосекунди
+  tickerScheduler.add(1, config.Update_Time_Via_NTP_Every * 60 * 1000, [&](void *) { getNTPtime(); }, nullptr, false); // Синхронізація з NTP сервером
+  tickerScheduler.add(2, 30 * 1000, [&](void *) { firstGetNTPtime(); }, nullptr, true);                                //Перше обновлення годинника
+  tickerScheduler.add(3, 15 * 60 * 1000, [&](void *) { getOpenWeatherData(); }, nullptr, true);                        //Обновлення погоди Open Weather
+  tickerScheduler.add(4, 30 * 1000, [&](void *) { TempLoop(); }, nullptr, true);                                       //Вимірювання температури
+  tickerScheduler.add(5, 1 * 1000, [&](void *) { thermostatControl(); }, nullptr, true);                               //Робота з реле
+  tickerScheduler.add(6, 30 * 1000, [&](void *) { writeToInternet(); }, nullptr, true);                                //Записуємо дані в thingspeak.com
 }
 
-void loop() {
-    tickerScheduler.update();
-    server.handleClient();
-    ArduinoOTA.handle();
-    Debug.handle();
-    customWatchdog = millis();
+void loop()
+{
+  tickerScheduler.update();
+  server.handleClient();
+  ArduinoOTA.handle();
+  Debug.handle();
+  customWatchdog = millis();
+  if (!isCorrectTemperature())
+  {
+    ESP.reset();
+  }
 }

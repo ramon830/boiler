@@ -22,7 +22,9 @@ byte modeRelayToNumber() {
 //==========================================================
 //****Записуємо дані в thingspeak.com
 void writeToInternet() {
-
+if (!isCorrectTemperature()) {
+    return;
+}
 Debug.print("connecting to ");
 Debug.println(hostThingSpeak);
 
