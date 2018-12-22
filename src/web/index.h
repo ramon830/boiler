@@ -48,36 +48,38 @@ getElementsByTagName("head")[0].appendChild(a)}else if("css"==t)
 {var a=document.createElement("link");a.href=e,a.rel="stylesheet",a.type="text/css",a.async=!1,
 a.onload=function(){n()},document.getElementsByTagName("head")[0].appendChild(a)}}
 </script>
-)=====" ;
+)=====";
 
 // =======================================================================
 //****Стан реле в текст
-String relayOnToString(boolean relay) {
-  if (relay) {
+String relayOnToString(boolean relay)
+{
+  if (relay)
+  {
     return "Включено";
-  } 
+  }
   return "Виключено";
 }
 
 // =======================================================================
 //****Встановлюємо значення
-void send_index_values_html() {
-    String values ="";
-    values += "x_clock|" + printDateTime() +  "|div\n";
-    values += "temp_in|" + (String)(round(Oweather.temp) - 273.15) +  "|div\n";
-    values += "pressure|" + (String)(round(Oweather.pressure * 0.75)) +  "|div\n";
-    values += "humidity|" + (String)(round(Oweather.humidity))  +  "|div\n";
-    values += "wind_speed|" + (String)(round(Oweather.speed))  +  "|div\n";
-    values += "wind_direc|" + windDirection() +  "|div\n";
+void send_index_values_html()
+{
+  String values = "";
+  values += "x_clock|" + printDateTime() + "|div\n";
+  values += "temp_in|" + (String)(round(Oweather.temp) - 273.15) + "|div\n";
+  values += "pressure|" + (String)(round(Oweather.pressure * 0.75)) + "|div\n";
+  values += "humidity|" + (String)(round(Oweather.humidity)) + "|div\n";
+  values += "wind_speed|" + (String)(round(Oweather.speed)) + "|div\n";
+  values += "wind_direc|" + windDirection() + "|div\n";
 
-    values += "SmallRoom|" + (String)getTemperatureFromFilter(smallRoom)  +  "|div\n";
-    values += "BedRoom|" + (String)getTemperatureFromFilter(bedRoom)   +  "|div\n";
-    values += "RadiatorSmallRoom|" + (String)getTemperatureFromFilter(radiatorSmallRoom)   +  "|div\n";
-    values += "RadiatorBedRoom|" + (String)getTemperatureFromFilter(radiatorBedRoom)  +  "|div\n";
-    values += "relayBoilerOn|" + (String)relayOnToString(relayBoilerOn)  +  "|div\n";
-    values += "relaySmallroomOn|" + (String)relayOnToString(relaySmallroomOn)  +  "|div\n";
-    values += "relayBedroomOn|" + (String)relayOnToString(relayBedroomOn)  +  "|div\n";
+  values += "SmallRoom|" + (String)getTemperatureFromFilter(smallRoom) + "|div\n";
+  values += "BedRoom|" + (String)getTemperatureFromFilter(bedRoom) + "|div\n";
+  values += "RadiatorSmallRoom|" + (String)getTemperatureFromFilter(radiatorSmallRoom) + "|div\n";
+  values += "RadiatorBedRoom|" + (String)getTemperatureFromFilter(radiatorBedRoom) + "|div\n";
+  values += "relayBoilerOn|" + (String)relayOnToString(relayBoilerOn) + "|div\n";
+  values += "relaySmallroomOn|" + (String)relayOnToString(relaySmallroomOn) + "|div\n";
+  values += "relayBedroomOn|" + (String)relayOnToString(relayBedroomOn) + "|div\n";
 
-  server.send ( 200, "text/plain", values);
-  
+  server.send(200, "text/plain", values);
 }

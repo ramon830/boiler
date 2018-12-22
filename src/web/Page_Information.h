@@ -39,31 +39,30 @@ getElementsByTagName("head")[0].appendChild(a)}else if("css"==t)
 {var a=document.createElement("link");a.href=e,a.rel="stylesheet",a.type="text/css",a.async=!1,
 a.onload=function(){n()},document.getElementsByTagName("head")[0].appendChild(a)}}
 </script>
-)=====" ;
+)=====";
 
 //==========================================================
 //****Mac Address
-String GetMacAddress(){
+String GetMacAddress()
+{
   uint8_t mac[6];
   char macStr[18] = {0};
   WiFi.macAddress(mac);
-  sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5]);
-  return  String(macStr);
+  sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  return String(macStr);
 }
 
 //==========================================================
 //****
-void send_information_values_html ()
+void send_information_values_html()
 {
 
-  String values ="";
+  String values = "";
 
-  values += "x_ssid|" + (String)WiFi.SSID() +  "|div\n";
-  values += "x_ip|" +  (String) WiFi.localIP()[0] + "." +  (String) WiFi.localIP()[1] + "." +  (String) WiFi.localIP()[2] + "." + (String) WiFi.localIP()[3] +  "|div\n";
-  values += "x_gateway|" +  (String) WiFi.gatewayIP()[0] + "." +  (String) WiFi.gatewayIP()[1] + "." +  (String) WiFi.gatewayIP()[2] + "." + (String) WiFi.gatewayIP()[3] +  "|div\n";
-  values += "x_netmask|" +  (String) WiFi.subnetMask()[0] + "." +  (String) WiFi.subnetMask()[1] + "." +  (String) WiFi.subnetMask()[2] + "." + (String) WiFi.subnetMask()[3] +  "|div\n";
-  values += "x_mac|" + GetMacAddress() +  "|div\n";
-  server.send ( 200, "text/plain", values);
-  
-  
+  values += "x_ssid|" + (String)WiFi.SSID() + "|div\n";
+  values += "x_ip|" + (String)WiFi.localIP()[0] + "." + (String)WiFi.localIP()[1] + "." + (String)WiFi.localIP()[2] + "." + (String)WiFi.localIP()[3] + "|div\n";
+  values += "x_gateway|" + (String)WiFi.gatewayIP()[0] + "." + (String)WiFi.gatewayIP()[1] + "." + (String)WiFi.gatewayIP()[2] + "." + (String)WiFi.gatewayIP()[3] + "|div\n";
+  values += "x_netmask|" + (String)WiFi.subnetMask()[0] + "." + (String)WiFi.subnetMask()[1] + "." + (String)WiFi.subnetMask()[2] + "." + (String)WiFi.subnetMask()[3] + "|div\n";
+  values += "x_mac|" + GetMacAddress() + "|div\n";
+  server.send(200, "text/plain", values);
 }

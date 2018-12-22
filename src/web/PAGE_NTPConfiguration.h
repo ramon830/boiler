@@ -69,114 +69,135 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 </script>
 )=====";
 
-
 // =======================================================================
 //**** Вставляння дати в html код
-String getDateValuesHtml() {
-  String values ="";
-  values += (String)DateTime.year +(String)"-";
-    if ((int) DateTime.month <10) {
-      values += "0"+ (String)DateTime.month; 
-    } else {
-      values += (String)DateTime.month; 
-    }
-    values += "-";
-    if ((int) DateTime.day <10) {
-      values += "0"+ (String)DateTime.day; 
-    } else {
-      values += (String)DateTime.day; 
-    }
+String getDateValuesHtml()
+{
+  String values = "";
+  values += (String)DateTime.year + (String) "-";
+  if ((int)DateTime.month < 10)
+  {
+    values += "0" + (String)DateTime.month;
+  }
+  else
+  {
+    values += (String)DateTime.month;
+  }
+  values += "-";
+  if ((int)DateTime.day < 10)
+  {
+    values += "0" + (String)DateTime.day;
+  }
+  else
+  {
+    values += (String)DateTime.day;
+  }
   return values;
 }
 
 // =======================================================================
 //**** Вставляння часу в html код
-String getTimeValuesHtml() {
-  String values ="";
-    if ((int) DateTime.hour <10) {
-      values += "0"+ (String)DateTime.hour; 
-    } else {
-      values += (String)DateTime.hour; 
-    }
-    values += ":";
-    if ((int) DateTime.minute <10) {
-      values += "0"+ (String)DateTime.minute; 
-    } else {
-      values += (String)DateTime.minute; 
-    }
+String getTimeValuesHtml()
+{
+  String values = "";
+  if ((int)DateTime.hour < 10)
+  {
+    values += "0" + (String)DateTime.hour;
+  }
+  else
+  {
+    values += (String)DateTime.hour;
+  }
+  values += ":";
+  if ((int)DateTime.minute < 10)
+  {
+    values += "0" + (String)DateTime.minute;
+  }
+  else
+  {
+    values += (String)DateTime.minute;
+  }
   return values;
 }
 
 // =======================================================================
 //****Конвертація дати і часу в long
-void setDateTime(String _date, String _time) {
-  
-  
-    String _day = (String)_date.charAt(8) + (String)_date.charAt(9);
-    String _month = (String)_date.charAt(5) + (String)_date.charAt(6);
-    String _year = (String)_date.charAt(0) + (String)_date.charAt(1)+ (String)_date.charAt(2)+ (String)_date.charAt(3);
-    String _hour = (String)_time.charAt(0) + (String)_time.charAt(1);
-    String _minute = (String)_time.charAt(3) + (String)_time.charAt(4);
-    UnixTimestamp = 0;
-    for (int i = 1970; i < _year.toInt(); i++) {
-      if (LEAP_YEAR(i)) {
-        UnixTimestamp += 366 * 24 * 60 *60;
-      } else {
-        UnixTimestamp += 365 * 24 * 60 *60;
-      }
+void setDateTime(String _date, String _time)
+{
+
+  String _day = (String)_date.charAt(8) + (String)_date.charAt(9);
+  String _month = (String)_date.charAt(5) + (String)_date.charAt(6);
+  String _year = (String)_date.charAt(0) + (String)_date.charAt(1) + (String)_date.charAt(2) + (String)_date.charAt(3);
+  String _hour = (String)_time.charAt(0) + (String)_time.charAt(1);
+  String _minute = (String)_time.charAt(3) + (String)_time.charAt(4);
+  UnixTimestamp = 0;
+  for (int i = 1970; i < _year.toInt(); i++)
+  {
+    if (LEAP_YEAR(i))
+    {
+      UnixTimestamp += 366 * 24 * 60 * 60;
     }
-    for (int i = 0; i < _month.toInt()-1; i++ ) {
-        UnixTimestamp += monthDays[i] * 24 * 60 *60; 
+    else
+    {
+      UnixTimestamp += 365 * 24 * 60 * 60;
     }
-    for (int i = 1; i < _day.toInt(); i++ ) {
-        UnixTimestamp += 24 * 60 *60; 
-    }
-    UnixTimestamp += _hour.toInt() * 3600 + _minute.toInt() * 60 - 3 *3600;
-    DateTime = ConvertUnixTimeStamp(absoluteActualTime);
-    server.send_P ( 200, "text/html", PAGE_NTPConfiguration ); 
-   
-  
+  }
+  for (int i = 0; i < _month.toInt() - 1; i++)
+  {
+    UnixTimestamp += monthDays[i] * 24 * 60 * 60;
+  }
+  for (int i = 1; i < _day.toInt(); i++)
+  {
+    UnixTimestamp += 24 * 60 * 60;
+  }
+  UnixTimestamp += _hour.toInt() * 3600 + _minute.toInt() * 60 - config.timeZone * 360;
+
+  DateTime = ConvertUnixTimeStamp(absoluteActualTime);
+  server.send_P(200, "text/html", PAGE_NTPConfiguration);
 }
 
 // =======================================================================
 //****Збереження часу
 void send_NTP_configuration_html()
 {
-  if (server.args() > 0 )  // Save Settings
+  if (server.args() > 0) // Save Settings
   {
     config.isDayLightSaving = false;
     String temp = "";
     String _date = "";
     String _time = "";
-    for ( uint8_t i = 0; i < server.args(); i++ ) {
-      if (server.argName(i) == "ntpserver") config.ntpServerName = urldecode( server.arg(i)); 
-      if (server.argName(i) == "update") config.Update_Time_Via_NTP_Every =  server.arg(i).toInt(); 
-      if (server.argName(i) == "tz") config.timeZone =  server.arg(i).toInt(); 
-      if (server.argName(i) == "dst") config.isDayLightSaving = true; 
-      if (server.argName(i) == "date") _date = server.arg(i);
-      if (server.argName(i) == "time") _time = server.arg(i);
+    for (uint8_t i = 0; i < server.args(); i++)
+    {
+      if (server.argName(i) == "ntpserver")
+        config.ntpServerName = urldecode(server.arg(i));
+      if (server.argName(i) == "update")
+        config.Update_Time_Via_NTP_Every = server.arg(i).toInt();
+      if (server.argName(i) == "tz")
+        config.timeZone = server.arg(i).toInt();
+      if (server.argName(i) == "dst")
+        config.isDayLightSaving = true;
+      if (server.argName(i) == "date")
+        _date = server.arg(i);
+      if (server.argName(i) == "time")
+        _time = server.arg(i);
     }
-    setDateTime(_date, _time); 
+    setDateTime(_date, _time);
     WriteConfig();
-  
   }
-  server.send_P ( 200, "text/html", PAGE_NTPConfiguration ); 
-    
+  server.send_P(200, "text/html", PAGE_NTPConfiguration);
 }
 
 // =======================================================================
 //****Налаштування часу
 void send_NTP_configuration_values_html()
 {
-    
-  String values ="";
-  values += "ntpserver|" + (String) config.ntpServerName + "|input\n";
-  values += "update|" +  (String) config.Update_Time_Via_NTP_Every + "|input\n";
-  values += "tz|" +  (String) config.timeZone + "|input\n";
-  values += "dst|" +  (String) (config.isDayLightSaving ? "checked" : "") + "|chk\n";
-  values += "date|" + getDateValuesHtml()  + "|input\n";
+
+  String values = "";
+  values += "ntpserver|" + (String)config.ntpServerName + "|input\n";
+  values += "update|" + (String)config.Update_Time_Via_NTP_Every + "|input\n";
+  values += "tz|" + (String)config.timeZone + "|input\n";
+  values += "dst|" + (String)(config.isDayLightSaving ? "checked" : "") + "|chk\n";
+  values += "date|" + getDateValuesHtml() + "|input\n";
   values += "time|" + getTimeValuesHtml() + "|input\n";
-  server.send ( 200, "text/plain", values);
-
+  server.send(200, "text/plain", values);
 }
-

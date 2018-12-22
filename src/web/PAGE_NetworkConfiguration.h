@@ -49,49 +49,81 @@ appendChild(a)}}
 
 )=====";
 
-
 //==========================================================
 //**** Збереження мережевих налаштувань
 void send_network_configuration_html()
 {
-  
-  if (server.args() > 0 )  // Save Settings
+
+  if (server.args() > 0) // Save Settings
   {
     String temp = "";
     config.dhcp = false;
-    for ( uint8_t i = 0; i < server.args(); i++ ) {
-      if (server.argName(i) == "ssid") config.ssid =   urldecode(server.arg(i));
-      if (server.argName(i) == "password") config.password =    urldecode(server.arg(i));
-      if (server.argName(i) == "ip_0") if (checkRange(server.arg(i)))   config.IP[0] =  server.arg(i).toInt();
-      if (server.argName(i) == "ip_1") if (checkRange(server.arg(i)))   config.IP[1] =  server.arg(i).toInt();
-      if (server.argName(i) == "ip_2") if (checkRange(server.arg(i)))   config.IP[2] =  server.arg(i).toInt();
-      if (server.argName(i) == "ip_3") if (checkRange(server.arg(i)))   config.IP[3] =  server.arg(i).toInt();
-      if (server.argName(i) == "nm_0") if (checkRange(server.arg(i)))   config.Netmask[0] =  server.arg(i).toInt();
-      if (server.argName(i) == "nm_1") if (checkRange(server.arg(i)))   config.Netmask[1] =  server.arg(i).toInt();
-      if (server.argName(i) == "nm_2") if (checkRange(server.arg(i)))   config.Netmask[2] =  server.arg(i).toInt();
-      if (server.argName(i) == "nm_3") if (checkRange(server.arg(i)))   config.Netmask[3] =  server.arg(i).toInt();
-      if (server.argName(i) == "gw_0") if (checkRange(server.arg(i)))   config.Gateway[0] =  server.arg(i).toInt();
-      if (server.argName(i) == "gw_1") if (checkRange(server.arg(i)))   config.Gateway[1] =  server.arg(i).toInt();
-      if (server.argName(i) == "gw_2") if (checkRange(server.arg(i)))   config.Gateway[2] =  server.arg(i).toInt();
-      if (server.argName(i) == "gw_3") if (checkRange(server.arg(i)))   config.Gateway[3] =  server.arg(i).toInt();
-      if (server.argName(i) == "dns_0") if (checkRange(server.arg(i)))  config.DNS[0] =  server.arg(i).toInt();
-      if (server.argName(i) == "dns_1") if (checkRange(server.arg(i)))   config.DNS[1] =  server.arg(i).toInt();
-      if (server.argName(i) == "dns_2") if (checkRange(server.arg(i)))   config.DNS[2] =  server.arg(i).toInt();
-      if (server.argName(i) == "dns_3") if (checkRange(server.arg(i)))   config.DNS[3] =  server.arg(i).toInt();
-      if (server.argName(i) == "dhcp") config.dhcp = true;
+    for (uint8_t i = 0; i < server.args(); i++)
+    {
+      if (server.argName(i) == "ssid")
+        config.ssid = urldecode(server.arg(i));
+      if (server.argName(i) == "password")
+        config.password = urldecode(server.arg(i));
+      if (server.argName(i) == "ip_0")
+        if (checkRange(server.arg(i)))
+          config.IP[0] = server.arg(i).toInt();
+      if (server.argName(i) == "ip_1")
+        if (checkRange(server.arg(i)))
+          config.IP[1] = server.arg(i).toInt();
+      if (server.argName(i) == "ip_2")
+        if (checkRange(server.arg(i)))
+          config.IP[2] = server.arg(i).toInt();
+      if (server.argName(i) == "ip_3")
+        if (checkRange(server.arg(i)))
+          config.IP[3] = server.arg(i).toInt();
+      if (server.argName(i) == "nm_0")
+        if (checkRange(server.arg(i)))
+          config.Netmask[0] = server.arg(i).toInt();
+      if (server.argName(i) == "nm_1")
+        if (checkRange(server.arg(i)))
+          config.Netmask[1] = server.arg(i).toInt();
+      if (server.argName(i) == "nm_2")
+        if (checkRange(server.arg(i)))
+          config.Netmask[2] = server.arg(i).toInt();
+      if (server.argName(i) == "nm_3")
+        if (checkRange(server.arg(i)))
+          config.Netmask[3] = server.arg(i).toInt();
+      if (server.argName(i) == "gw_0")
+        if (checkRange(server.arg(i)))
+          config.Gateway[0] = server.arg(i).toInt();
+      if (server.argName(i) == "gw_1")
+        if (checkRange(server.arg(i)))
+          config.Gateway[1] = server.arg(i).toInt();
+      if (server.argName(i) == "gw_2")
+        if (checkRange(server.arg(i)))
+          config.Gateway[2] = server.arg(i).toInt();
+      if (server.argName(i) == "gw_3")
+        if (checkRange(server.arg(i)))
+          config.Gateway[3] = server.arg(i).toInt();
+      if (server.argName(i) == "dns_0")
+        if (checkRange(server.arg(i)))
+          config.DNS[0] = server.arg(i).toInt();
+      if (server.argName(i) == "dns_1")
+        if (checkRange(server.arg(i)))
+          config.DNS[1] = server.arg(i).toInt();
+      if (server.argName(i) == "dns_2")
+        if (checkRange(server.arg(i)))
+          config.DNS[2] = server.arg(i).toInt();
+      if (server.argName(i) == "dns_3")
+        if (checkRange(server.arg(i)))
+          config.DNS[3] = server.arg(i).toInt();
+      if (server.argName(i) == "dhcp")
+        config.dhcp = true;
     }
-     server.send_P ( 200, "text/html", PAGE_WaitAndReload );
-   WriteConfig();
-   delay(1000);
-   ESP.reset();
-
-        
+    server.send_P(200, "text/html", PAGE_WaitAndReload);
+    WriteConfig();
+    delay(1000);
+    ESP.reset();
   }
   else
   {
-    server.send_P ( 200, "text/html", PAGE_NetworkConfiguration ); 
+    server.send_P(200, "text/html", PAGE_NetworkConfiguration);
   }
-  
 }
 
 //==========================================================
@@ -100,54 +132,59 @@ void send_connection_state_values_html()
 
   String state = "НЕМАЄ ДАНИХ";
   String Networks = "";
-  if (WiFi.status() == 0) state = "Idle";
-  else if (WiFi.status() == 1) state = "НЕМАЄ ДОСТУПНИХ МЕРЕЖ";
-  else if (WiFi.status() == 2) state = "СКАНУВАННЯ ЗАВЕРШЕНО";
-  else if (WiFi.status() == 3) state = "З'ЄДНАННЯ ВСТАНОВЛЕНО";
-  else if (WiFi.status() == 4) state = "ПОМИЛКА З'ЄДНАННЯ";
-  else if (WiFi.status() == 5) state = "РОЗ'ЄДНАННО";
-  else if (WiFi.status() == 6) state = "НЕМАЄ З'ЄДНАННЯ";
+  if (WiFi.status() == 0)
+    state = "Idle";
+  else if (WiFi.status() == 1)
+    state = "НЕМАЄ ДОСТУПНИХ МЕРЕЖ";
+  else if (WiFi.status() == 2)
+    state = "СКАНУВАННЯ ЗАВЕРШЕНО";
+  else if (WiFi.status() == 3)
+    state = "З'ЄДНАННЯ ВСТАНОВЛЕНО";
+  else if (WiFi.status() == 4)
+    state = "ПОМИЛКА З'ЄДНАННЯ";
+  else if (WiFi.status() == 5)
+    state = "РОЗ'ЄДНАННО";
+  else if (WiFi.status() == 6)
+    state = "НЕМАЄ З'ЄДНАННЯ";
 
-   int n = WiFi.scanNetworks();
+  int n = WiFi.scanNetworks();
 
-   if (n == 0)
-   {
-     Networks = "<font color='#FF0000'>Нет доступных сетей!</font>";
-   }
+  if (n == 0)
+  {
+    Networks = "<font color='#FF0000'>Нет доступных сетей!</font>";
+  }
   else
-    {
-   
-    
-    Networks = "Доступно мереж: " +String(n) + "<br>";
+  {
+
+    Networks = "Доступно мереж: " + String(n) + "<br>";
     Networks += "<table border='0' cellspacing='0' cellpadding='3'>";
     Networks += "<tr bgcolor='#DDDDDD' ><td><strong>Ім'я</strong></td><td><strong>Качество</strong></td><td><strong>Защита</strong></td><tr>";
     for (int i = 0; i < n; ++i)
     {
-      int quality=0;
-      if(WiFi.RSSI(i) <= -100)
+      int quality = 0;
+      if (WiFi.RSSI(i) <= -100)
       {
-          quality = 0;
+        quality = 0;
       }
-      else if(WiFi.RSSI(i) >= -50)
+      else if (WiFi.RSSI(i) >= -50)
       {
-          quality = 100;
+        quality = 100;
       }
       else
       {
         quality = 2 * (WiFi.RSSI(i) + 100);
       }
 
-
-      Networks += "<tr><td><a href='javascript:selssid(\""  +  String(WiFi.SSID(i))  + "\")'>"  +  String(WiFi.SSID(i))  + "</a></td><td>" +  String(quality) + "%</td><td>" +  String((WiFi.encryptionType(i) == ENC_TYPE_NONE)?" ":"*")  + "</td></tr>";
+      Networks += "<tr><td><a href='javascript:selssid(\"" + String(WiFi.SSID(i)) + "\")'>" + String(WiFi.SSID(i)) + "</a></td><td>" + String(quality) + "%</td><td>" + String((WiFi.encryptionType(i) == ENC_TYPE_NONE) ? " " : "*") + "</td></tr>";
     }
     Networks += "</table>";
   }
-   
-  String values ="";
-  values += "connectionstate|" +  state + "|div\n";
-  values += "networks|" +  Networks + "|div\n";
-  server.send ( 200, "text/plain", values);
-  
+
+  String values = "";
+  values += "connectionstate|" + state + "|div\n";
+  values += "networks|" + Networks + "|div\n";
+  server.send(200, "text/plain", values);
+
   //AdminTimeOutCounter=0;
 }
 
@@ -155,27 +192,26 @@ void send_connection_state_values_html()
 void send_network_configuration_values_html()
 {
 
-  String values ="";
+  String values = "";
 
-  values += "ssid|" + (String) config.ssid + "|input\n";
-  values += "password|" +  (String) config.password + "|input\n";
-  values += "ip_0|" +  (String) config.IP[0] + "|input\n";
-  values += "ip_1|" +  (String) config.IP[1] + "|input\n";
-  values += "ip_2|" +  (String) config.IP[2] + "|input\n";
-  values += "ip_3|" +  (String) config.IP[3] + "|input\n";
-  values += "nm_0|" +  (String) config.Netmask[0] + "|input\n";
-  values += "nm_1|" +  (String) config.Netmask[1] + "|input\n";
-  values += "nm_2|" +  (String) config.Netmask[2] + "|input\n";
-  values += "nm_3|" +  (String) config.Netmask[3] + "|input\n";
-  values += "gw_0|" +  (String) config.Gateway[0] + "|input\n";
-  values += "gw_1|" +  (String) config.Gateway[1] + "|input\n";
-  values += "gw_2|" +  (String) config.Gateway[2] + "|input\n";
-  values += "gw_3|" +  (String) config.Gateway[3] + "|input\n";
-  values += "dns_0|" +  (String) config.DNS[0] + "|input\n";
-  values += "dns_1|" +  (String) config.DNS[1] + "|input\n";
-  values += "dns_2|" +  (String) config.DNS[2] + "|input\n";
-  values += "dns_3|" +  (String) config.DNS[3] + "|input\n";
-  values += "dhcp|" +  (String) (config.dhcp ? "checked" : "") + "|chk\n";
-  server.send ( 200, "text/plain", values);
-  
-}  
+  values += "ssid|" + (String)config.ssid + "|input\n";
+  values += "password|" + (String)config.password + "|input\n";
+  values += "ip_0|" + (String)config.IP[0] + "|input\n";
+  values += "ip_1|" + (String)config.IP[1] + "|input\n";
+  values += "ip_2|" + (String)config.IP[2] + "|input\n";
+  values += "ip_3|" + (String)config.IP[3] + "|input\n";
+  values += "nm_0|" + (String)config.Netmask[0] + "|input\n";
+  values += "nm_1|" + (String)config.Netmask[1] + "|input\n";
+  values += "nm_2|" + (String)config.Netmask[2] + "|input\n";
+  values += "nm_3|" + (String)config.Netmask[3] + "|input\n";
+  values += "gw_0|" + (String)config.Gateway[0] + "|input\n";
+  values += "gw_1|" + (String)config.Gateway[1] + "|input\n";
+  values += "gw_2|" + (String)config.Gateway[2] + "|input\n";
+  values += "gw_3|" + (String)config.Gateway[3] + "|input\n";
+  values += "dns_0|" + (String)config.DNS[0] + "|input\n";
+  values += "dns_1|" + (String)config.DNS[1] + "|input\n";
+  values += "dns_2|" + (String)config.DNS[2] + "|input\n";
+  values += "dns_3|" + (String)config.DNS[3] + "|input\n";
+  values += "dhcp|" + (String)(config.dhcp ? "checked" : "") + "|chk\n";
+  server.send(200, "text/plain", values);
+}

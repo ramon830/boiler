@@ -369,5 +369,4 @@ void watchDog()
     Debug.println("CustomWatchdog bites. Bye");
     ESP.reset();
   }
-
 }
