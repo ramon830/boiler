@@ -1,27 +1,18 @@
 //==========================================================
 //****Стан реле  в thingspeak.com
-/*
-б. спальні/ б. м. кімнати/ котел
-000
-001
-010
-011
-100
-101
-110
-111
-*/
+
+
 byte modeRelayToNumber()
 {
     byte s = 0;
-    if (relayBoilerOn)
-        s += 1;
     if (relaySmallroomOn)
         s += 2;
     if (relayBedroomOn)
         s += 4;
     return s;
 }
+
+
 
 //==========================================================
 //****Записуємо дані в thingspeak.com
@@ -62,6 +53,8 @@ void writeToInternet()
     url += (String)modeRelayToNumber();
     url += "&field6=";
     url += (String)(round(Oweather.temp) - 273.15);
+    url += "&field7=";
+    url += (String)(relayBoilerOn ? 1 : 0);
 
     Debug.print("Requesting URL: ");
     Debug.print(hostThingSpeak);
