@@ -55,6 +55,8 @@ void writeToInternet()
     url += (String)(round(Oweather.temp) - 273.15);
     url += "&field7=";
     url += (String)(relayBoilerOn ? 1 : 0);
+    url += "&field8=";
+    url += (String)(setTemperature);
 
     Debug.print("Requesting URL: ");
     Debug.print(hostThingSpeak);

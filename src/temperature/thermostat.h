@@ -49,13 +49,15 @@ boolean force(byte mode, boolean *relayOn)
 //****Термостат
 boolean thermostat(float temperature, float gisterezis, float realTemperature, int startTime,
                    int stopTime, boolean mode, boolean relayOn)
-{ //mode - true нагрів, false охолодження
+{ 
+    //mode - true нагрів, false охолодження
     int realTime = DateTime.hour * 60 + DateTime.minute;
     if ((realTime >= startTime && realTime <= stopTime) ||
         (startTime > stopTime && (realTime >= startTime || realTime <= stopTime)))
     {
         if (mode == true)
         {
+            
             if (realTemperature >= (gisterezis + temperature))
             {
                 if (relayOn)
@@ -72,7 +74,7 @@ boolean thermostat(float temperature, float gisterezis, float realTemperature, i
             }
         }
         else
-        {
+        {   
             if (realTemperature > temperature)
             {
                 if (!relayOn)
@@ -113,6 +115,7 @@ boolean sunday(String address)
 //****Нічний режим
 boolean night(String address)
 {
+    setTemperature = config.nightTemperature;
     return thermostat(config.nightTemperature, config.nightGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeNightStart, config.timeNightStop, true, relayBoilerOn);
@@ -122,6 +125,7 @@ boolean night(String address)
 //****Ранковий режим
 boolean morning(String address)
 {
+    setTemperature = config.morningTemperature;
     return thermostat(config.morningTemperature, config.morningGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeMorningStart, config.timeMorningStop, true, relayBoilerOn);
@@ -131,6 +135,7 @@ boolean morning(String address)
 //****Денний режим
 boolean day(String address)
 {
+    setTemperature = config.dayTemperature;
     return thermostat(config.dayTemperature, config.dayGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeDayStart, config.timeDayStop, true, relayBoilerOn);
@@ -140,6 +145,7 @@ boolean day(String address)
 //****Вечірній режим
 boolean evening(String address)
 {
+    setTemperature = config.eveningTemperature;
     return thermostat(config.eveningTemperature, config.eveningGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeEveningStart, config.timeEveningStop, true, relayBoilerOn);

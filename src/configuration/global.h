@@ -55,6 +55,7 @@ struct strConfig
   int timeMorningStop;      // 2 Byte - EEPROM 297
 
 } config;
+float setTemperature = 20.0;
 boolean relayBoilerOn = false;      // Реле котла
 boolean relaySmallroomOn = false;   // Реле вентилятора малої кімнати
 boolean relayBedroomOn = false;     // Реле вентилятора спальні
