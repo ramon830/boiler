@@ -26,7 +26,7 @@ void getNTPtime()
     IPAddress timeServerIP;
     WiFi.hostByName(config.ntpServerName.c_str(), timeServerIP);
 
-    //Debug.println("sending NTP packet...");
+    ////Debug.println("sending NTP packet...");
     memset(packetBuffer, 0, NTP_PACKET_SIZE);
     packetBuffer[0] = 0b11100011; // LI, Version, Mode
     packetBuffer[1] = 0;          // Stratum, or type of clock
@@ -45,12 +45,12 @@ void getNTPtime()
     int cb = UDPNTPClient.parsePacket();
     if (cb == 0)
     {
-      Debug.println("No NTP packet yet");
+      //Debug.println("No NTP packet yet");
     }
     else
     {
-      Debug.print("NTP packet received, length=");
-      Debug.println(cb);
+      ////Debug.printf("NTP packet received, length=");
+      //Debug.println(cb);
       UDPNTPClient.read(packetBuffer, NTP_PACKET_SIZE); // read the packet into the buffer
       unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
       unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
@@ -62,7 +62,7 @@ void getNTPtime()
   }
   else
   {
-    Debug.println("Internet yet not connected");
+    //Debug.println("Internet yet not connected");
     delay(500);
   }
   yield();

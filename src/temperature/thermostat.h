@@ -115,7 +115,6 @@ boolean sunday(String address)
 //****Нічний режим
 boolean night(String address)
 {
-    setTemperature = config.nightTemperature;
     return thermostat(config.nightTemperature, config.nightGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeNightStart, config.timeNightStop, true, relayBoilerOn);
@@ -125,7 +124,6 @@ boolean night(String address)
 //****Ранковий режим
 boolean morning(String address)
 {
-    setTemperature = config.morningTemperature;
     return thermostat(config.morningTemperature, config.morningGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeMorningStart, config.timeMorningStop, true, relayBoilerOn);
@@ -135,7 +133,6 @@ boolean morning(String address)
 //****Денний режим
 boolean day(String address)
 {
-    setTemperature = config.dayTemperature;
     return thermostat(config.dayTemperature, config.dayGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeDayStart, config.timeDayStop, true, relayBoilerOn);
@@ -145,7 +142,6 @@ boolean day(String address)
 //****Вечірній режим
 boolean evening(String address)
 {
-    setTemperature = config.eveningTemperature;
     return thermostat(config.eveningTemperature, config.eveningGiterezis,
                       getTemperatureFromFilter(address),
                       config.timeEveningStart, config.timeEveningStop, true, relayBoilerOn);
@@ -174,32 +170,32 @@ void thermostatControl()
             if (night(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("Sunday night small on");
+                //Debug.println("Sunday night small on");
             }
             else if (sunday(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("Sunday  small on");
+                //Debug.println("Sunday  small on");
             }
             else
             {
                 tempSmallRoom = false;
-                Debug.println("Sunday  small off");
+                //Debug.println("Sunday  small off");
             }
             if (night(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("Sunday night bedroom on");
+                //Debug.println("Sunday night bedroom on");
             }
             else if (sunday(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("Sunday bedroom on");
+                //Debug.println("Sunday bedroom on");
             }
             else
             {
                 tempBedRoom = false;
-                Debug.println("Sunday bedroom off");
+                //Debug.println("Sunday bedroom off");
             }
         }
         else
@@ -207,52 +203,52 @@ void thermostatControl()
             if (night(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("night small on");
+                //Debug.println("night small on");
             }
             else if (morning(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("morning small on");
+                //Debug.println("morning small on");
             }
             else if (day(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("day small on");
+                //Debug.println("day small on");
             }
             else if (evening(smallRoom))
             {
                 tempSmallRoom = true;
-                Debug.println("evening small on");
+                //Debug.println("evening small on");
             }
             else
             {
                 tempSmallRoom = false;
-                Debug.println("small off");
+                //Debug.println("small off");
             }
             if (night(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("night bedroom on");
+                //Debug.println("night bedroom on");
             }
             else if (morning(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("morning bedroom on");
+                //Debug.println("morning bedroom on");
             }
             else if (day(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("day bedroom on");
+                //Debug.println("day bedroom on");
             }
             else if (evening(bedRoom))
             {
                 tempBedRoom = true;
-                Debug.println("evening bedroom on");
+                //Debug.println("evening bedroom on");
             }
             else
             {
                 tempBedRoom = false;
-                Debug.println("bedroom off");
+                //Debug.println("bedroom off");
             }
         }
         if (tempBedRoom || tempSmallRoom)

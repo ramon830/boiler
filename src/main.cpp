@@ -42,7 +42,7 @@ void setup()
   tickerScheduler.add(0, 1000, [&](void *) { ISRsecondTick(); }, nullptr, true);                                       //Обновлення годинника щосекунди
   tickerScheduler.add(1, config.Update_Time_Via_NTP_Every * 60 * 1000, [&](void *) { getNTPtime(); }, nullptr, false); // Синхронізація з NTP сервером
   tickerScheduler.add(2, 30 * 1000, [&](void *) { firstGetNTPtime(); }, nullptr, true);                                //Перше обновлення годинника
-  tickerScheduler.add(3, 15 * 60 * 1000, [&](void *) { getOpenWeatherData(); }, nullptr, true);                        //Обновлення погоди Open Weather
+  tickerScheduler.add(3, 5 * 60 * 1000, [&](void *) {getWeatherData(); }, nullptr, true);                        //Обновлення погоди Open Weather
   tickerScheduler.add(4, 30 * 1000, [&](void *) { TempLoop(); }, nullptr, true);                                       //Вимірювання температури
   tickerScheduler.add(5, 1 * 1000, [&](void *) { thermostatControl(); }, nullptr, true);                               //Робота з реле
   tickerScheduler.add(6, 30 * 1000, [&](void *) { writeToInternet(); }, nullptr, true);                                //Записуємо дані в thingspeak.com

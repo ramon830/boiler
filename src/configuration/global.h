@@ -229,7 +229,7 @@ void EEPROMWriteInt(int p_address, int p_value)
 void WriteConfig()
 {
 
-  Debug.println("Writing Config");
+  //Debug.println("Writing Config");
   EEPROM.write(0, 'C');
   EEPROM.write(1, 'F');
   EEPROM.write(2, 'G');
@@ -367,7 +367,7 @@ void watchDog()
 {
   if (millis() - customWatchdog > 30000)
   {
-    Debug.println("CustomWatchdog bites. Bye");
+    //Debug.println("CustomWatchdog bites. Bye");
     ESP.reset();
   }
 }

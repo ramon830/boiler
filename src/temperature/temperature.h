@@ -18,19 +18,19 @@ void SetupDS18B20()
 {
   DS18B20.begin();
 
-  Debug.print("Parasite power is: ");
+  ////Debug.printf("Parasite power is: ");
   if (DS18B20.isParasitePowerMode())
   {
-    Debug.println("ON");
+    //Debug.println("ON");
   }
   else
   {
-    Debug.println("OFF");
+    //Debug.println("OFF");
   }
 
   numberOfDevices = DS18B20.getDeviceCount();
-  Debug.print("Device count: ");
-  Debug.println(numberOfDevices);
+  ////Debug.printf("Device count: ");
+  //Debug.println(numberOfDevices);
 
   DS18B20.requestTemperatures();
 
@@ -41,27 +41,27 @@ void SetupDS18B20()
     if (DS18B20.getAddress(devAddr[i], i))
     {
       //devAddr[i] = tempDeviceAddress;
-      Debug.print("Found device ");
-      Debug.print(i, DEC);
-      Debug.print(" with address: " + GetAddressToString(devAddr[i]));
-      Debug.println();
+      ////Debug.printf("Found device ");
+      ////Debug.printf(i, DEC);
+      ////Debug.printf(" with address: " + GetAddressToString(devAddr[i]));
+      //Debug.println();
     }
     else
     {
-      Debug.print("Found ghost device at ");
-      Debug.print(i, DEC);
-      Debug.print(" but could not detect address. Check power and cabling");
+      ////Debug.printf("Found ghost device at ");
+      ////Debug.printf(i, DEC);
+      ////Debug.printf(" but could not detect address. Check power and cabling");
     }
 
     //Get resolution of DS18b20
-    Debug.print("Resolution: ");
-    Debug.print(DS18B20.getResolution(devAddr[i]));
-    Debug.println();
+    ////Debug.printf("Resolution: ");
+    ////Debug.printf(DS18B20.getResolution(devAddr[i]));
+    //Debug.println();
 
     //Read temperature from DS18b20
     float tempC = DS18B20.getTempC(devAddr[i]);
-    Debug.print("Temp C: ");
-    Debug.println(tempC);
+    ////Debug.printf("Temp C: ");
+    //Debug.println(tempC);
   }
 }
 
@@ -129,7 +129,7 @@ boolean isCorrectTemperature()
       getTemperatureFromFilter(radiatorSmallRoom) < (-20.0) || getTemperatureFromFilter(radiatorSmallRoom) > 80.0 ||
       getTemperatureFromFilter(radiatorBedRoom) < (-20.0) || getTemperatureFromFilter(radiatorBedRoom) > 80.0)
   {
-    Debug.println("Некоректна температура");
+    //Debug.println("Некоректна температура");
     return false;
   }
   return true;

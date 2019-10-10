@@ -12,10 +12,6 @@ const char PAGE_Index[] PROGMEM = R"=====(
 <tr><td align="right">Дата :</td><td><span id="x_clock"></span></td></tr>
 <tr><td align="center"><strong>Погода OpenWeatherMap</strong></td></tr>
 <tr><td align="right">Температура на вулиці :</td><td><span id="temp_in"></span> &deg;С</td></tr>
-<tr><td align="right">Тиск  :</td><td><span id="pressure"></span> мм рт.ст.</td></tr>
-<tr><td align="right">Вологість :</td><td><span id="humidity"></span> %</td></tr>
-<tr><td align="right">Швидкість вітру   :</td><td><span id="wind_speed"> </span>м/с</td></tr>
-<tr><td align="right">Вітер :</td><td><span id="wind_direc"></span></td></tr>
 <tr><td align="center"><strong>Температури</strong></td></tr>
 <tr><td align="right">Мала кімната</td><td><span id="SmallRoom"></span> &deg;С</td></tr>
 <tr><td align="right">Спальня</td><td><span id="BedRoom"></span> &deg;С</td></tr>
@@ -67,12 +63,8 @@ void send_index_values_html()
 {
   String values = "";
   values += "x_clock|" + printDateTime() + "|div\n";
-  values += "temp_in|" + (String)(round(Oweather.temp) - 273.15) + "|div\n";
-  values += "pressure|" + (String)(round(Oweather.pressure * 0.75)) + "|div\n";
-  values += "humidity|" + (String)(round(Oweather.humidity)) + "|div\n";
-  values += "wind_speed|" + (String)(round(Oweather.speed)) + "|div\n";
-  values += "wind_direc|" + windDirection() + "|div\n";
-
+  values += "temp_in|" + (String)(Oweather.temp) + "|div\n";
+  
   values += "SmallRoom|" + (String)getTemperatureFromFilter(smallRoom) + "|div\n";
   values += "BedRoom|" + (String)getTemperatureFromFilter(bedRoom) + "|div\n";
   values += "RadiatorSmallRoom|" + (String)getTemperatureFromFilter(radiatorSmallRoom) + "|div\n";

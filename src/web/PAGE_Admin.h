@@ -9,7 +9,6 @@ const char PAGE_AdminMainPage[] PROGMEM = R"=====(
 <hr>
 <a href="/"   style="width:250px"  class="btn btn--m btn--blue" >Головна сторінка</a><br>
 <a href="config.html" style="width:250px" class="btn btn--m btn--blue" >Налаштування мережі</a><br>
-<a href="weather-config.html" style="width:250px" class="btn btn--m btn--blue" >Налаштування погоди</a><br>
 <a href="ntp.html"   style="width:250px"  class="btn btn--m btn--blue" >Налаштування часу і дати</a><br>
 <a href="info.html"   style="width:250px"  class="btn btn--m btn--blue" >Мережева інформація</a><br>
 <a href="temperature-config.html"   style="width:250px"  class="btn btn--m btn--blue" >Налаштування термостата</a><br>

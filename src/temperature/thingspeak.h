@@ -22,23 +22,24 @@ void writeToInternet()
     {
         return;
     }
-    Debug.print("connecting to ");
-    Debug.println(hostThingSpeak);
+    ////Debug.print("connecting to ");
+    //Debug.println(hostThingSpeak);
 
     // Use WiFiClient class to create TCP connections
     WiFiClient client;
     const int httpPort = 80;
     if (!client.connect(hostThingSpeak, httpPort))
     {
-        Debug.println("connection failed");
-        Debug.println();
-        Debug.println();
-        Debug.println();
+        //Debug.println("connection failed");
+        //Debug.println();
+        //Debug.println();
+        //Debug.println();
         return;
     }
-    Debug.println("connected -)");
-    Debug.println("");
+    //Debug.println("connected -)");
+    //Debug.println("");
     // Создаем URI для запроса
+       
     String url = "/update?key=";
     url += apikeyThingSpeak;
     url += "&field1=";
@@ -52,15 +53,15 @@ void writeToInternet()
     url += "&field5=";
     url += (String)modeRelayToNumber();
     url += "&field6=";
-    url += (String)(round(Oweather.temp) - 273.15);
+    url += (String)(Oweather.temp);
     url += "&field7=";
     url += (String)(relayBoilerOn ? 1 : 0);
     url += "&field8=";
     url += (String)(setTemperature);
 
-    Debug.print("Requesting URL: ");
-    Debug.print(hostThingSpeak);
-    Debug.println(url);
+    ////Debug.print("Requesting URL: ");
+    ////Debug.print(hostThingSpeak);
+    //Debug.println(url);
 
     // отправляем запрос на сервер
     client.print(String("GET ") + url + " HTTP/1.1\r\n" +
@@ -73,10 +74,10 @@ void writeToInternet()
     {
         String line = client.readStringUntil('\r');
         //char line = client.read();
-        Debug.print(line);
+        ////Debug.print(line);
     }
 
-    Debug.println();
-    Debug.println("closing connection");
-    Debug.println();
+    //Debug.println();
+    //Debug.println("closing connection");
+    //Debug.println();
 }
