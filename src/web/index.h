@@ -17,6 +17,7 @@ const char PAGE_Index[] PROGMEM = R"=====(
 <tr><td align="right">Спальня</td><td><span id="BedRoom"></span> &deg;С</td></tr>
 <tr><td align="right">Батарея малої кімнати</td><td><span id="RadiatorSmallRoom"> м/с</span> &deg;С</td></tr>
 <tr><td align="right">Батарея спальні</td><td><span id="RadiatorBedRoom"></span> &deg;С</td></tr>
+<tr><td align="right">Задана температура</td><td><span id="setTemperature"></span> &deg;С</td></tr>
 <tr><td align="center"><strong>Стан реле</strong></td></tr>
 <tr><td align="right">Реле котла: </td><td><span id="relayBoilerOn"></span></td></tr>
 <tr><td align="right">Реле вентилятора мал. кімнати: </td><td><span id="relaySmallroomOn"></span></td></tr>
@@ -69,6 +70,7 @@ void send_index_values_html()
   values += "BedRoom|" + (String)getTemperatureFromFilter(bedRoom) + "|div\n";
   values += "RadiatorSmallRoom|" + (String)getTemperatureFromFilter(radiatorSmallRoom) + "|div\n";
   values += "RadiatorBedRoom|" + (String)getTemperatureFromFilter(radiatorBedRoom) + "|div\n";
+  values += "setTemperature|" + (String)setTemperature + "|div\n";
   values += "relayBoilerOn|" + (String)relayOnToString(relayBoilerOn) + "|div\n";
   values += "relaySmallroomOn|" + (String)relayOnToString(relaySmallroomOn) + "|div\n";
   values += "relayBedroomOn|" + (String)relayOnToString(relayBedroomOn) + "|div\n";

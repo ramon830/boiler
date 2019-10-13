@@ -169,11 +169,13 @@ void thermostatControl()
         {
             if (night(smallRoom))
             {
+                setTemperature = config.nightTemperature;
                 tempSmallRoom = true;
                 //Debug.println("Sunday night small on");
             }
             else if (sunday(smallRoom))
             {
+                setTemperature = config.sundayTemperature;
                 tempSmallRoom = true;
                 //Debug.println("Sunday  small on");
             }
@@ -184,11 +186,13 @@ void thermostatControl()
             }
             if (night(bedRoom))
             {
+                setTemperature = config.nightTemperature;
                 tempBedRoom = true;
                 //Debug.println("Sunday night bedroom on");
             }
             else if (sunday(bedRoom))
             {
+                setTemperature = config.sundayTemperature;
                 tempBedRoom = true;
                 //Debug.println("Sunday bedroom on");
             }
@@ -202,21 +206,25 @@ void thermostatControl()
         {
             if (night(smallRoom))
             {
+                setTemperature = config.nightTemperature;
                 tempSmallRoom = true;
                 //Debug.println("night small on");
             }
             else if (morning(smallRoom))
             {
+                setTemperature = config.morningTemperature;
                 tempSmallRoom = true;
                 //Debug.println("morning small on");
             }
             else if (day(smallRoom))
             {
+                setTemperature = config.dayTemperature;
                 tempSmallRoom = true;
                 //Debug.println("day small on");
             }
             else if (evening(smallRoom))
             {
+                setTemperature = config.eveningTemperature;
                 tempSmallRoom = true;
                 //Debug.println("evening small on");
             }
@@ -227,21 +235,25 @@ void thermostatControl()
             }
             if (night(bedRoom))
             {
+                setTemperature = config.nightTemperature;
                 tempBedRoom = true;
                 //Debug.println("night bedroom on");
             }
             else if (morning(bedRoom))
             {
+                setTemperature = config.morningTemperature;
                 tempBedRoom = true;
                 //Debug.println("morning bedroom on");
             }
             else if (day(bedRoom))
             {
+                setTemperature = config.dayTemperature;
                 tempBedRoom = true;
                 //Debug.println("day bedroom on");
             }
             else if (evening(bedRoom))
             {
+                setTemperature = config.eveningTemperature;
                 tempBedRoom = true;
                 //Debug.println("evening bedroom on");
             }
