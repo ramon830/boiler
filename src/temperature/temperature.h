@@ -29,7 +29,7 @@ void SetupDS18B20()
   }
 
   numberOfDevices = DS18B20.getDeviceCount();
-  ////Debug.printf("Device count: ");
+  //Debug.printf("Device count: ");
   //Debug.println(numberOfDevices);
 
   DS18B20.requestTemperatures();

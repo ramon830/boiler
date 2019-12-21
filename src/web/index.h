@@ -10,7 +10,6 @@ const char PAGE_Index[] PROGMEM = R"=====(
 <hr>
 <table border="0"  cellspacing="0" cellpadding="3" style="width:640px" >
 <tr><td align="right">Дата :</td><td><span id="x_clock"></span></td></tr>
-<tr><td align="center"><strong>Погода OpenWeatherMap</strong></td></tr>
 <tr><td align="right">Температура на вулиці :</td><td><span id="temp_in"></span> &deg;С</td></tr>
 <tr><td align="center"><strong>Температури</strong></td></tr>
 <tr><td align="right">Мала кімната</td><td><span id="SmallRoom"></span> &deg;С</td></tr>
@@ -22,7 +21,6 @@ const char PAGE_Index[] PROGMEM = R"=====(
 <tr><td align="right">Реле котла: </td><td><span id="relayBoilerOn"></span></td></tr>
 <tr><td align="right">Реле вентилятора мал. кімнати: </td><td><span id="relaySmallroomOn"></span></td></tr>
 <tr><td align="right">Реле вентилятора спальні: </td><td><span id="relayBedroomOn"></span></td></tr>
-
 </table>
 <script>
 
@@ -65,7 +63,6 @@ void send_index_values_html()
   String values = "";
   values += "x_clock|" + printDateTime() + "|div\n";
   values += "temp_in|" + (String)(Oweather.temp) + "|div\n";
-  
   values += "SmallRoom|" + (String)getTemperatureFromFilter(smallRoom) + "|div\n";
   values += "BedRoom|" + (String)getTemperatureFromFilter(bedRoom) + "|div\n";
   values += "RadiatorSmallRoom|" + (String)getTemperatureFromFilter(radiatorSmallRoom) + "|div\n";
@@ -74,6 +71,5 @@ void send_index_values_html()
   values += "relayBoilerOn|" + (String)relayOnToString(relayBoilerOn) + "|div\n";
   values += "relaySmallroomOn|" + (String)relayOnToString(relaySmallroomOn) + "|div\n";
   values += "relayBedroomOn|" + (String)relayOnToString(relayBedroomOn) + "|div\n";
-
   server.send(200, "text/plain", values);
 }
